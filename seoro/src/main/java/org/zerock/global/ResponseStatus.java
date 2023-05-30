@@ -10,7 +10,7 @@ public enum ResponseStatus {
 	SENIOR_SIGNUP_SUCCESS("d", "d"),
 	
 	// caregiver(요양사) 응답 status
-	CAREGIVER_SIGNUP_SUCCESS("ㅇ", "ㅇㄹ");
+	CAREGIVER_SIGNUP_SUCCESS("CA000", "요양사 회원 생성 성공");
 	
 	
 //	ResponseStatus(String code,String message) {

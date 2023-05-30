@@ -6,5 +6,5 @@ import org.zerock.domain.caregiver.entity.Caregiver;
 
 @Repository
 public interface CaregiverRepo extends CrudRepository<Caregiver, Long> {
-	
+	boolean existsByCid(String cid);
 }

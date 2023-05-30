@@ -2,6 +2,7 @@ package org.zerock.domain.caregiver.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +17,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "CAREGIVER")
+@Builder
 public class Caregiver {
 
 	
@@ -39,7 +45,7 @@ public class Caregiver {
 	private String name;
 	
 	@Column(nullable = false)
-	private Timestamp birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private int gender;
@@ -50,7 +56,7 @@ public class Caregiver {
 	@Column(nullable = false)
 	private String address;
 	
-	private String profile;
+	//private String profile;
 	
 	private String workTime;
 	
@@ -76,8 +82,8 @@ public class Caregiver {
 	@Column(nullable = false)
 	private BigDecimal lati;
 	
-	@Column(nullable = false)
-	private Timestamp regdate;
+	@CreationTimestamp
+	private LocalDateTime regdate;
 	
 	@Column(nullable = false)
 	private String cid;
@@ -90,7 +96,7 @@ public class Caregiver {
 	@Column(nullable = false)
 	private int regCheck; // 0은 기본 상태, 1은 승인 상태, 2는 거절 상태를 의미합니다.
 	
-	@Column(nullable = false)
-	private String certilmage;
+	//@Column(nullable = false)
+	//private String certilmage;
 	
 }
