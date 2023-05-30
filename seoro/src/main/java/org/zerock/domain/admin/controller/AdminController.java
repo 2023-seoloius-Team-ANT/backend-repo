@@ -5,27 +5,30 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.service.AdminService;
-import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.global.ResponseFormat;
 import org.zerock.global.ResponseStatus;
 
+import lombok.extern.java.Log;
 
-@Controller
+
+@RestController
 @RequestMapping("/api/v1/admin")
+@Log
 public class AdminController {
 	
 	@Autowired
-	AdminService adminService;
+	private AdminService adminService;
 	
 	@GetMapping("/caregiver")
-	public ResponseEntity<ResponseFormat<List<Caregiver>>> getCaregiver(Integer regCheck) throws Exception {
+	public ResponseEntity<ResponseFormat<List<AdminResponseDTO>>> getCaregiver() throws Exception {
 		
-		List<Caregiver> allCaregivers = adminService.getCaregiver(regCheck);
-		ResponseFormat<List<Caregiver>> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_SIGNUP_SUCCESS, allCaregivers);
+		List<AdminResponseDTO> dtoList = adminService.getCaregiver();
+		ResponseFormat<List<AdminResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_SIGNUP_SUCCESS, dtoList);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 	

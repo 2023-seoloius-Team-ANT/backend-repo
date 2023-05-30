@@ -2,23 +2,22 @@ package org.zerock.domain.caregiver.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
-import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "CAREGIVER")
+@Builder
 public class Caregiver {
 
 	
@@ -39,7 +39,7 @@ public class Caregiver {
 	private String name;
 	
 	@Column(nullable = false)
-	private Timestamp birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private int gender;
@@ -93,4 +93,24 @@ public class Caregiver {
 	@Column(nullable = false)
 	private String certilmage;
 	
+	
+	public AdminResponseDTO puttingDTO(Caregiver caregiver) {
+		
+		LocalDate now = LocalDate.now();
+		int year = now.getYear();
+		
+		return AdminResponseDTO.builder()
+				.careno(caregiver.getCareno())
+				.name(caregiver.getName())
+				.char1(caregiver.getChar1())
+				.char2(caregiver.getChar2())
+				.char3(caregiver.getChar3())
+				.gender(caregiver.getGender())
+				.workTime(caregiver.getWorkTime())
+				.workday(caregiver.getWorkday())
+				.age(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1)
+				.profile(caregiver.getProfile())
+				.certifi(caregiver.getCertifi())
+				.build();
+	}
 }

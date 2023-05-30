@@ -1,17 +1,22 @@
 //package org.zerock.test;
 //
-//import javax.persistence.Column;
+//import java.util.ArrayList;
+//import java.util.List;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.annotation.Commit;
-//import org.zerock.domain.betSeniorCare.BetRepo;
-//import org.zerock.domain.caregiver.CaregiverRepo;
-//import org.zerock.domain.searched.SearchRepo;
-//import org.zerock.domain.senior.Senior;
-//import org.zerock.domain.senior.SeniorRepo;
+//import org.springframework.test.context.web.WebAppConfiguration;
+//import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
+//import org.zerock.domain.betSeniorCare.repository.BetRepo;
+//import org.zerock.domain.caregiver.entity.Caregiver;
+//import org.zerock.domain.caregiver.repository.CaregiverRepo;
+//import org.zerock.domain.searched.entity.Searched;
+//import org.zerock.domain.searched.repository.SearchRepo;
+//import org.zerock.domain.senior.entity.Senior;
+//import org.zerock.domain.senior.repository.SeniorRepo;
 //
 //import lombok.extern.java.Log;
 //
@@ -19,6 +24,7 @@
 //@SpringBootTest
 //@Log
 //@Commit
+//
 //public class Tests123 {
 //	
 //	@Autowired
@@ -28,7 +34,7 @@
 //	SearchRepo searchRepo;
 //	
 //	@Autowired
-//	CaregiverRepo caregiver;
+//	CaregiverRepo caregiverRepo;
 //	
 //	@Autowired
 //	BetRepo brepo;
@@ -75,9 +81,23 @@
 //		
 //		
 //	}
-		
-	
-
-
-
+//	
+//	@Test
+//	public void waitCare2() {
+//		
+//		
+//		List<Caregiver> caregiverList = new ArrayList<>();
+//		caregiverList = caregiverRepo.getWaitCare(0);
+//		
+//		for(Caregiver caregiver : caregiverList) {
+//			System.out.println(caregiver.getName());
+//			System.out.println(caregiver.getRegCheck());
+//		}
+//		
+//	}
+//		
+//	
+//
+//
+//
 //}
