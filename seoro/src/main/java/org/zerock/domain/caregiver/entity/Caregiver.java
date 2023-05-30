@@ -23,8 +23,10 @@ import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -32,6 +34,8 @@ import lombok.Setter;
 @Setter
 @Table(name = "CAREGIVER")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Caregiver {
 
 	
@@ -98,5 +102,18 @@ public class Caregiver {
 	
 	//@Column(nullable = false)
 	//private String certilmage;
+	
+	public CaregiverResponseDTO toCaregiverResponseDTO(Caregiver cg) {
+		return CaregiverResponseDTO.builder()
+				.careno(cg.getCareno())
+				.name(cg.getName())
+				.char1(cg.getChar1())
+				.char2(cg.getChar2())
+				.char3(cg.getChar3())
+				.worktime(cg.getWorkTime())
+				.workday(cg.getWorkday())
+				.build();
+				
+	}
 	
 }
