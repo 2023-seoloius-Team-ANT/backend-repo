@@ -1,24 +1,21 @@
 package org.zerock.domain.senior.entity;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.searched.entity.Searched;
+import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -80,5 +77,22 @@ public class Senior {
 	@Column(nullable = false)
 	private String pwd;
 	
+	public SeniorResponseDTO responseSeniorDto(Senior senior) {
+		
+		BetSeniorCare betSeniorCare;
+		String.valueOf(betSeniorCare.getYear()) + "년" + " " + String.valueOf(betSeniorCare.getMonth()) + "월"
+		
+		return SeniorResponseDTO.builder()
+				.name(senior.getName())
+				.birth(senior.getBirth())
+				.gender(String.valueOf(senior.getGender()))
+				.tel(senior.getTel())
+				.telCare(senior.getTelCare())
+				.conmonth("2023년 3월")
+				.spec1(senior.getSpec1())
+				.spec2(senior.getSpec2())
+				.spec3(senior.getSpec3())
+				.address(senior.getAddress())
+	}
 
 }

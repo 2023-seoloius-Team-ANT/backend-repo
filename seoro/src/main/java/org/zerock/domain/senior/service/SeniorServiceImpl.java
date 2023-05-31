@@ -1,10 +1,12 @@
 package org.zerock.domain.senior.service;
 
+
 import javax.persistence.EntityExistsException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.senior.dto.request.SeniorRequestDTO;
+import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
 import org.zerock.domain.senior.entity.Senior;
 import org.zerock.domain.senior.repository.SeniorRepo;
 
@@ -28,4 +30,13 @@ public class SeniorServiceImpl implements SeniorService {
 		seniorRepo.save(senior);
 		}	
 	}
+	
+	@Override
+	public SeniorResponseDTO detailSenior(Long seniorno) {
+		Senior senior = new Senior();
+		senior = seniorRepo.findById(seniorno).get();
+		SeniorResponseDTO dto = senior.responseSeniorDto(senior);
+		
+	}
+	
 }
