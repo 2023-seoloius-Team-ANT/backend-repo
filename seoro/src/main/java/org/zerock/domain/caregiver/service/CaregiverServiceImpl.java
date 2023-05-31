@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import javax.persistence.EntityExistsException;
 
@@ -17,6 +18,7 @@ import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.domain.caregiver.repository.CaregiverRepo;
+import org.zerock.domain.senior.repository.SeniorRepo;
 import org.zerock.global.aws.S3Service;
 
 import lombok.extern.java.Log;
@@ -29,6 +31,9 @@ public class CaregiverServiceImpl implements CaregiverService{
 	private CaregiverRepo caregiverRepo;
 	
 	@Autowired
+	private SeniorRepo seniorRepo;
+	
+	@Autowired
 	private BetRepo betRepo;
 	
 	@Autowired
@@ -37,10 +42,12 @@ public class CaregiverServiceImpl implements CaregiverService{
 	@Override
 	public void createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception {
 		// 이미 있는 아이디인지 검증
-		if(caregiverRepo.existsByCid(dto.getCid())) { // senior에서도 확인 필요
+		if(caregiverRepo.existsByCid(dto.getCid())) { // caregiver 테이블에서 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
-		
+		if(seniorRepo.existsByCid(dto.getCid())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
+			throw new EntityExistsException();
+		}
 		Caregiver saveCaregiver = dto.toCaregiverEntity(dto);
 		
 		String profileUrl = s3Service.uploadFile(profile, "profile"); // 앞은 파일, 뒤는 aws의 디렉토리 경로
@@ -86,7 +93,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 			dto.setGenderStr("여성");		
 		}
 		
-		// 년도 -> 나이로 변환 (만 나이를 기준으로 합니다)
+		// 년도 -> 나이로 변환 (한국 나이를 기준으로 합니다)
 		LocalDate now = LocalDate.now();	
 		int year = now.getYear(); // 올해 년도
 		String birth = caregiver.getBirth(); // ex) 19981119 형태
@@ -126,13 +133,56 @@ public class CaregiverServiceImpl implements CaregiverService{
 
 	@Override
 	public List<CaregiverResponseDTO> getCaregiverList(int year, int month, BigDecimal lon, BigDecimal lat) throws Exception {
+		Caregiver caregivers = new Caregiver();
+		List<Long> strCaregiverList = caregiverRepo.findByMonthYearDESC(year, month); //year, month에 해당하는 caregiver의 pk들
 		
-		return null;
+		List<CaregiverResponseDTO> caregiverListAll = new ArrayList<>(); // 총 담을 dto;
+		
+		CaregiverResponseDTO innercare = new CaregiverResponseDTO();
+		
+		for(Long listEle: strCaregiverList) { // 해당 월,년에 가능한 요양사 리스트 pk 하나씩 뽑기
+			Caregiver cg = caregiverRepo.findById(listEle).get();
+			
+			// 가능한 년, 월 기준으로 뽑은 리스트에서 거리 기준으로 한 번 더 거르기
+			double careLat = cg.getLati().doubleValue(); // 요양보호사 주소의 위도를 double로 형변환
+			double careLon = cg.getLon().doubleValue(); // 요양보호사 주소의 경도를 double로 형변환
+			
+			// 거리를 계산하는 메소드를 통해 거리가 2km 이하의 요양사만 arrayList에 넣기
+			if(distance(careLat, careLon, lat.doubleValue(), lon.doubleValue()) <= 2) {
+				System.out.println(distance(careLat, careLon, lat.doubleValue(), lon.doubleValue())); // 거리 정상 출력인지 확인
+				innercare.setCareno(listEle);
+				innercare.setChar1(cg.getChar1());
+				innercare.setChar2(cg.getChar2());
+				innercare.setChar3(cg.getChar3());
+				innercare.setName(cg.getName());
+				innercare.setProfile(cg.getProfile());
+				innercare.setWorktime(cg.getWorkTime());	
+				innercare.setWorkday(cg.getWorkday());
+				
+				//성별 -> 0:남성, 1: 여성
+				if(cg.getGender() == 0) {
+					innercare.setGenderStr("남성");					
+				} else {
+					innercare.setGenderStr("여성");
+				}
+				
+				// 나이
+				LocalDate now = LocalDate.now();	
+				int thisYear = now.getYear(); // 올해 년도
+				String birth = cg.getBirth(); // ex) 19981119 형태
+				int birthYear = Integer.parseInt(birth.substring(0,4)); // 1998만 뽑아옴
+				innercare.setAge(thisYear - birthYear +1);
+				
+				caregiverListAll.add(innercare); // 조건에 맞는 요소는 ArrayList에 추가
+			}
+		}
+				
+		return caregiverListAll;
 	}
 	
     
 
-	//두 좌표 간의 거리 계산 메소드
+	//두 좌표 간의 거리 계산 메소드 -> 리턴 값: km 단로 계
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
@@ -151,6 +201,5 @@ public class CaregiverServiceImpl implements CaregiverService{
         
         return (dist);
     }
-
 
 }

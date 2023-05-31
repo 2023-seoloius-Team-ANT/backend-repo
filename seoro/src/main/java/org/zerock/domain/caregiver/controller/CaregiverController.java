@@ -36,9 +36,6 @@ public class CaregiverController {
 	// 요양사 회원가입 API
 	@PostMapping
 	public ResponseEntity<ResponseFormat<CaregiverResponseDTO>> createCaregiver(CaregiverRequestDTO dto, @RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage) throws Exception{
-		// aws bucket 추가되면 다시 실행
-		//@RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage)
-		
 		 if(profileImage == null || certiImage == null) { 
 			 log.info("파일이 존재하지 않습니다.");
 		 }
@@ -74,11 +71,13 @@ public class CaregiverController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 	
-//	// 예약 가능한 요양사 리스트 불러오는 API
-//	@GetMapping("/{year}/{month}/{lon}/{lat}")
-//	public ResponseEntity<ResponseFormat<List<CaregiverResponseDTO>>> getCaregiverList(@PathVariable int year, @PathVariable int month, @PathVariable BigDecimal lon, @PathVariable BigDecimal lat) throws Exception{
-//		caregiverService.getCaregiverList(year, month, lon ,lat);
-//	}
-//	
+	// 예약 가능한 요양사 리스트 불러오는 API
+	@GetMapping("/{year}/{month}/{lon}/{lat}")
+	public ResponseEntity<ResponseFormat<List<CaregiverResponseDTO>>> getCaregiverList(@PathVariable int year, @PathVariable int month, @PathVariable BigDecimal lon, @PathVariable BigDecimal lat) throws Exception{
+		List<CaregiverResponseDTO> caregiverResponseDTO =  caregiverService.getCaregiverList(year, month, lon ,lat);
+		ResponseFormat<List<CaregiverResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_FILTERLIST_SUCCESS, caregiverResponseDTO);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+
 	
 }
