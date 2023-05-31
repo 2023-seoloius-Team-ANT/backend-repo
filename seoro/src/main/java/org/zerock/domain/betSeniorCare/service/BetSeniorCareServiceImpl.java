@@ -1,5 +1,5 @@
 package org.zerock.domain.betSeniorCare.service;
 
-public class BetSeniorCareServiceImpl {
+public class BetSeniorcareServiceImpl implements BetSeniorcareService {
 
 }

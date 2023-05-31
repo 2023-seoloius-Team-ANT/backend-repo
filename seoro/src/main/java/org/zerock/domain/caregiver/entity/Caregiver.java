@@ -100,8 +100,8 @@ public class Caregiver {
 	
 	public AdminResponseDTO puttingDTO(Caregiver caregiver) {
 		
-		LocalDate now = LocalDate.now();
-		int year = now.getYear();
+		LocalDate now = LocalDate.now(); //날짜 정보를 가져옴
+		int year = now.getYear(); // 현재 연도 얻기
 		
 		return AdminResponseDTO.builder()
 				.careno(caregiver.getCareno())

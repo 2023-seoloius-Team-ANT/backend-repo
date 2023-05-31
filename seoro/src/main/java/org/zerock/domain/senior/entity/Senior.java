@@ -20,14 +20,19 @@ import javax.persistence.Table;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.searched.entity.Searched;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "SENIOR")
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Senior {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +48,7 @@ public class Senior {
 	private String name;
 	
 	@Column(nullable = false)
-	private Timestamp birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private int gender;
@@ -74,5 +79,6 @@ public class Senior {
 	
 	@Column(nullable = false)
 	private String pwd;
+	
 
 }

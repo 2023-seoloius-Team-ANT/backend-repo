@@ -5,8 +5,6 @@ package org.zerock.domain.admin.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
@@ -38,13 +36,13 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override //요양사 승인 API
 	public void acceptCare(Long careno) {
-		int acceptCount = caregiverRepo.changeCare(careno, 1);
+		int acceptCount = caregiverRepo.changeCare(careno, 1); //1은 승인을 의미
 		log.info("update count: " + acceptCount);
 	}
 	
 	@Override //요양사 거절 API
 	public void declineCare(Long careno) {
-		int declineCount = caregiverRepo.changeCare(careno, 2);
+		int declineCount = caregiverRepo.changeCare(careno, 2); //2는 거절을 의미
 		log.info("update count: " + declineCount);
 	}
 }

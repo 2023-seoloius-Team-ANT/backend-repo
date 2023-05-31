@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ResponseStatus {
 	// senior(노인) 응답 status
-	SENIOR_SIGNUP_SUCCESS("d", "d"),
+	SENIOR_SIGNUP_SUCCESS("SE000", "노인 회원 생성 성공"),
 	
 	// caregiver(요양사) 응답 status
 	CAREGIVER_SIGNUP_SUCCESS("ㅇ", "ㅇㄹ"),

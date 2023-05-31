@@ -1,42 +1,42 @@
-package org.zerock.test;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-
-import javax.transaction.Transactional;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
-import org.zerock.domain.betSeniorCare.repository.BetRepo;
-import org.zerock.domain.caregiver.entity.Caregiver;
-import org.zerock.domain.caregiver.repository.CaregiverRepo;
-import org.zerock.domain.searched.repository.SearchRepo;
-import org.zerock.domain.senior.repository.SeniorRepo;
-
-import lombok.extern.java.Log;
-
-@Transactional
-@AutoConfigureMockMvc
-@SpringBootTest
-@Log
-@Commit
-public class Tests123 {
-	
-	@Autowired
-	SeniorRepo srepo;
-	
-	@Autowired
-	SearchRepo searchRepo;
-	
-	@Autowired
-	CaregiverRepo caregiverRepo;
-	
-	@Autowired
-	BetRepo brepo;
+//package org.zerock.test;
+//
+//import java.sql.Timestamp;
+//import java.time.LocalDate;
+//
+//import javax.transaction.Transactional;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.test.annotation.Commit;
+//import org.zerock.domain.betSeniorCare.repository.BetRepo;
+//import org.zerock.domain.caregiver.repository.CaregiverRepo;
+//import org.zerock.domain.searched.repository.SearchRepo;
+//import org.zerock.domain.senior.dto.request.SeniorRequestDTO;
+//import org.zerock.domain.senior.entity.Senior;
+//import org.zerock.domain.senior.repository.SeniorRepo;
+//
+//import lombok.extern.java.Log;
+//
+//@Transactional
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@Log
+//@Commit
+//public class Tests123 {
+//	
+//	@Autowired
+//	SeniorRepo srepo;
+//	
+//	@Autowired
+//	SearchRepo searchRepo;
+//	
+//	@Autowired
+//	CaregiverRepo caregiverRepo;
+//	
+//	@Autowired
+//	BetRepo brepo;
 	
 
 	
@@ -114,11 +114,43 @@ public class Tests123 {
 //		int count = caregiverRepo.changeCare(careno, 0);
 //		log.info("update count: " + count);
 //	}
-		
-	}
-		
 	
-
-
-
+//	@Test
+//	public void signupSenior() { //노인회원가입 테스트
+//		
+//		SeniorRequestDTO dto = new SeniorRequestDTO();
+//		Senior senior = new Senior();
+//		
+//		String now = "2009-03-20 10:20:30.0";
+//		Timestamp val33 = Timestamp.valueOf(now);
+//		
+//		String val1 = "12.12";
+//		String val2 = "12.45";
+//		String val3 = "1";
+//		
+//		dto.setSid("123");
+//		dto.setPwd("12345");
+//		dto.setName("김수영");
+//		dto.setSpec1("친절한");
+//		dto.setSpec2("상냥한");
+//		dto.setSpec3("책임감있는");
+//		dto.setTel("01012341234");
+//		dto.setTelCare("01023411345");
+//		dto.setAddress("서울시");
+//		dto.setLon(val1);
+//		dto.setLati(val2);
+//		dto.setBirth("19301029");
+//		dto.setGender(val3);
+//		
+//		senior = dto.seniorForEntity(dto);
+//		senior.setRegdate(val33);
+//		srepo.save(senior);
+		
+		
+		
+		
+		
+//	}
+//		
+//	}
 
