@@ -16,9 +16,9 @@ public class CaregiverResponseDTO {
 	private String char2;
 	private String char3;
 	private String genderStr;
-	private String worktime;
-	private int workday;
+	private String worktime; // 근무 시간
+	private int workday; // 근무 요일 주 x일
 	private int age;
-	//private String profile; // 버킷 생성하고 추가
+	private String profile; // 버킷 생성하고 추가
 	
 }

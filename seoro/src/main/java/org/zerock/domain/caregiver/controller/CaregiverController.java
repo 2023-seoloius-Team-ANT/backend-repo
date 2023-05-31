@@ -1,5 +1,8 @@
 package org.zerock.domain.caregiver.controller;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.zerock.domain.caregiver.dto.request.CaregiverRequestDTO;
 import org.zerock.domain.caregiver.dto.request.UpdateInfoCaregiverRequestDTO;
+import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 import org.zerock.domain.caregiver.service.CaregiverService;
 import org.zerock.global.ResponseFormat;
 import org.zerock.global.ResponseStatus;
+import org.zerock.global.aws.S3Service;
 
 import lombok.extern.java.Log;
 
@@ -30,14 +35,16 @@ public class CaregiverController {
 	
 	// 요양사 회원가입 API
 	@PostMapping
-	public ResponseEntity<ResponseFormat<CaregiverResponseDTO>> createCaregiver(CaregiverRequestDTO dto) throws Exception{
+	public ResponseEntity<ResponseFormat<CaregiverResponseDTO>> createCaregiver(CaregiverRequestDTO dto, @RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage) throws Exception{
 		// aws bucket 추가되면 다시 실행
 		//@RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage)
-		/*
-		 * if(profileImage == null || certiImage == null) { log.info("파일이 존재하지 않습니다.");
-		 * }
-		 */
-		caregiverService.createCaregiver(dto);
+		
+		 if(profileImage == null || certiImage == null) { 
+			 log.info("파일이 존재하지 않습니다.");
+		 }
+		 
+		 
+		caregiverService.createCaregiver(dto, profileImage, certiImage);
 		ResponseFormat<CaregiverResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_SIGNUP_SUCCESS);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 		
@@ -59,5 +66,19 @@ public class CaregiverController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 	
+	// 요양사 Q&A에 해당하는 답변 가져오는 API
+	@GetMapping("/{careno}/{queno}")
+	public ResponseEntity<ResponseFormat<CaregiverQueResponseDTO>> getCaregiverAns(@PathVariable long careno, @PathVariable int queno) throws Exception{
+		CaregiverQueResponseDTO caregiverAns = caregiverService.getCaregiverAns(careno, queno);
+		ResponseFormat<CaregiverQueResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_GETANS_SUCCESS, caregiverAns);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+//	// 예약 가능한 요양사 리스트 불러오는 API
+//	@GetMapping("/{year}/{month}/{lon}/{lat}")
+//	public ResponseEntity<ResponseFormat<List<CaregiverResponseDTO>>> getCaregiverList(@PathVariable int year, @PathVariable int month, @PathVariable BigDecimal lon, @PathVariable BigDecimal lat) throws Exception{
+//		caregiverService.getCaregiverList(year, month, lon ,lat);
+//	}
+//	
 	
 }

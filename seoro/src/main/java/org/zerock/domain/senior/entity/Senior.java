@@ -43,7 +43,7 @@ public class Senior {
 	private String name;
 	
 	@Column(nullable = false)
-	private Timestamp birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private int gender;

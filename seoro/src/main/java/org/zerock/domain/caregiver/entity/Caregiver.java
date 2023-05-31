@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
+import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -60,7 +61,7 @@ public class Caregiver {
 	@Column(nullable = false)
 	private String address;
 	
-	//private String profile;
+	private String profile;
 	
 	private String workTime;
 	
@@ -100,8 +101,8 @@ public class Caregiver {
 	@Column(nullable = false)
 	private int regCheck; // 0은 기본 상태, 1은 승인 상태, 2는 거절 상태를 의미합니다.
 	
-	//@Column(nullable = false)
-	//private String certilmage;
+	@Column(nullable = false)
+	private String certilmage;
 	
 	public CaregiverResponseDTO toCaregiverResponseDTO(Caregiver cg) {
 		return CaregiverResponseDTO.builder()
@@ -116,4 +117,5 @@ public class Caregiver {
 				
 	}
 	
+
 }
