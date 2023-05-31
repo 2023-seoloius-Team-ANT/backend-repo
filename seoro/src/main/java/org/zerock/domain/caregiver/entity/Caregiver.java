@@ -17,8 +17,10 @@ import javax.persistence.Table;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -26,6 +28,8 @@ import lombok.Setter;
 @Setter
 @Table(name = "CAREGIVER")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Caregiver {
 
 	

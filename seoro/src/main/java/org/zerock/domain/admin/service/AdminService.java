@@ -10,4 +10,8 @@ import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 public interface AdminService {
 
 	public List<AdminResponseDTO> getCaregiver() throws Exception;
+	
+	public void acceptCare(Long careno);
+	
+	public void declineCare(Long careno);
 }
