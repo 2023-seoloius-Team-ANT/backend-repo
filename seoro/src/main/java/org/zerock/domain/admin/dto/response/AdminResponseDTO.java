@@ -11,15 +11,15 @@ import lombok.Setter;
 @Setter
 public class AdminResponseDTO {
 	
-	private Long careno;
+	private String careno;
 	private String name;
 	private String char1;
 	private String char2;
 	private String char3;
-	private int gender;
+	private String gender;
 	private String workTime;
-	private int workday;
-	private int age;
+	private String workday;
+	private String age;
 	private String profile;
 	private String certifi;
 	

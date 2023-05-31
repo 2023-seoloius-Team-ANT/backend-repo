@@ -31,21 +31,21 @@ public class AdminController {
 		
 		List<AdminResponseDTO> dtoList = adminService.getCaregiver();
 		ResponseFormat<List<AdminResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.GET_CAREGIVER_SUCCESS, dtoList);
-		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
 	@PutMapping("/{careno}/accept") //관리자가 회원가입 승인버튼을 눌렀을때
 	public ResponseEntity<ResponseFormat<ResponseStatus>> acceptCare(@PathVariable Long careno) throws Exception {
 		adminService.acceptCare(careno);
 		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.ACCEPT_CAREGIVER_SUCCESS);
-		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
 	@PutMapping("/{careno}/decline") //관리자가 회원가입 거절버튼 눌렀을때
 	public ResponseEntity<ResponseFormat<ResponseStatus>> declineCare(@PathVariable Long careno) throws Exception {
 		adminService.declineCare(careno);
 		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.DECLINE_CAREGIVER_SUCCESS);
-		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
 }

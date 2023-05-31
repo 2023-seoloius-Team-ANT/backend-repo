@@ -89,7 +89,7 @@ public class Caregiver {
 	@Column(nullable = false)
 	private String pwd;
 	
-	private int workday;
+	private String workday;
 	
 	@Column(nullable = false)
 	private int regCheck; // 0은 기본 상태, 1은 승인 상태, 2는 거절 상태를 의미합니다.
@@ -104,15 +104,15 @@ public class Caregiver {
 		int year = now.getYear(); // 현재 연도 얻기
 		
 		return AdminResponseDTO.builder()
-				.careno(caregiver.getCareno())
+				.careno(String.valueOf(caregiver.getCareno()))
 				.name(caregiver.getName())
 				.char1(caregiver.getChar1())
 				.char2(caregiver.getChar2())
 				.char3(caregiver.getChar3())
-				.gender(caregiver.getGender())
+				.gender(String.valueOf(caregiver.getGender()))
 				.workTime(caregiver.getWorkTime())
 				.workday(caregiver.getWorkday())
-				.age(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1)
+				.age(String.valueOf(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1))
 				.profile(caregiver.getProfile())
 				.certifi(caregiver.getCertifi())
 				.build();

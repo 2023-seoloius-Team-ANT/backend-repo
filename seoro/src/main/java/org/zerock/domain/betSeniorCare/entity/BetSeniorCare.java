@@ -18,7 +18,9 @@ import javax.persistence.Table;
 import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.domain.senior.entity.Senior;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -26,6 +28,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "BETSENIORCARE")
+@AllArgsConstructor
+@NoArgsConstructor
 public class BetSeniorCare {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

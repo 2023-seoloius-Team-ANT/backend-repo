@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.searched.entity.Searched;
 import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
@@ -79,8 +80,7 @@ public class Senior {
 	
 	public SeniorResponseDTO responseSeniorDto(Senior senior) {
 		
-		BetSeniorCare betSeniorCare;
-		String.valueOf(betSeniorCare.getYear()) + "년" + " " + String.valueOf(betSeniorCare.getMonth()) + "월"
+		BetSeniorCare betSeniorCare = new BetSeniorCare();
 		
 		return SeniorResponseDTO.builder()
 				.name(senior.getName())
@@ -88,11 +88,14 @@ public class Senior {
 				.gender(String.valueOf(senior.getGender()))
 				.tel(senior.getTel())
 				.telCare(senior.getTelCare())
-				.conmonth("2023년 3월")
+				.conmonth(String.valueOf(betSeniorCare.getYear()) + "년" + " " + String.valueOf(betSeniorCare.getMonth()) + "월")
 				.spec1(senior.getSpec1())
 				.spec2(senior.getSpec2())
 				.spec3(senior.getSpec3())
 				.address(senior.getAddress())
+				.lon(senior.getLon().toString())
+				.lati(senior.getLati().toString())
+				.build();
 	}
 
 }
