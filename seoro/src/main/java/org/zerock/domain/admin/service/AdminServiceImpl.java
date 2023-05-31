@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private CaregiverRepo caregiverRepo;
 	
-	@Override
+	@Override //회원가입 전 요양사 리스트 불러오기 성공
 	public List<AdminResponseDTO> getCaregiver() throws Exception {
 		List<Caregiver> caregivers = caregiverRepo.getWaitCare(); // 승인대기중인 요양사를 db에서 출력하기
 		List<AdminResponseDTO> dtoList = new ArrayList<>();
@@ -36,14 +36,15 @@ public class AdminServiceImpl implements AdminService {
 		
 	}
 	
-	@Override
+	@Override //요양사 승인 API
 	public void acceptCare(Long careno) {
 		int acceptCount = caregiverRepo.changeCare(careno, 1);
-		log.info("update count: " + count);
+		log.info("update count: " + acceptCount);
 	}
 	
-	@Override
+	@Override //요양사 거절 API
 	public void declineCare(Long careno) {
-		int declineCount = caregiverRepo.refuseCare(careno, 1);
+		int declineCount = caregiverRepo.changeCare(careno, 2);
+		log.info("update count: " + declineCount);
 	}
 }

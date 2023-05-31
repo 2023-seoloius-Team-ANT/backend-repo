@@ -41,10 +41,11 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 	
-	@PutMapping("/{careno}/accept") //관리자가 회원가입 거절버튼 눌렀을때
+	@PutMapping("/{careno}/decline") //관리자가 회원가입 거절버튼 눌렀을때
 	public ResponseEntity<ResponseFormat<ResponseStatus>> declineCare(@PathVariable Long careno) throws Exception {
 		adminService.declineCare(careno);
-		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.ACCEPT_CAREGIVER_SUCCESS);
+		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.DECLINE_CAREGIVER_SUCCESS);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
 	
 }
