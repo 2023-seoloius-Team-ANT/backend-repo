@@ -1,33 +1,36 @@
 package org.zerock.domain.senior.entity;
 
 import java.math.BigDecimal;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.searched.entity.Searched;
+import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Setter
 @Getter
 @Table(name = "SENIOR")
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Senior {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +46,7 @@ public class Senior {
 	private String name;
 	
 	@Column(nullable = false)
-	private Timestamp birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private int gender;
@@ -74,5 +77,25 @@ public class Senior {
 	
 	@Column(nullable = false)
 	private String pwd;
+	
+	public SeniorResponseDTO responseSeniorDto(Senior senior) {
+		
+		BetSeniorCare betSeniorCare = new BetSeniorCare();
+		
+		return SeniorResponseDTO.builder()
+				.name(senior.getName())
+				.birth(senior.getBirth())
+				.gender(String.valueOf(senior.getGender()))
+				.tel(senior.getTel())
+				.telCare(senior.getTelCare())
+				.conmonth(String.valueOf(betSeniorCare.getYear()) + "년" + " " + String.valueOf(betSeniorCare.getMonth()) + "월")
+				.spec1(senior.getSpec1())
+				.spec2(senior.getSpec2())
+				.spec3(senior.getSpec3())
+				.address(senior.getAddress())
+				.lon(senior.getLon().toString())
+				.lati(senior.getLati().toString())
+				.build();
+	}
 
 }
