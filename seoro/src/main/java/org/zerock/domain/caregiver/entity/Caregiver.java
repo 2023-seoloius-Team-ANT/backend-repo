@@ -65,8 +65,6 @@ public class Caregiver {
 	
 	private String info; //요양사 q&a
 	
-	private String visitTime; //요양사 q&a
-	
 	private String exp; //요양사 q&a
 	private String certifi; //요양사 q&a
 	
