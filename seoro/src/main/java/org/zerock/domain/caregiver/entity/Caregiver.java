@@ -130,7 +130,7 @@ public class Caregiver {
 				.char3(caregiver.getChar3())
 				.gender(String.valueOf(caregiver.getGender()))
 				.workTime(caregiver.getWorkTime())
-				.workday(String.valueOf(caregiver.getWorkday()))
+				.workday(String.valueOf((caregiver.getWorkday())))
 				.age(String.valueOf(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1))
 				.profile(caregiver.getProfile())
 				.certifi(caregiver.getCertifi())

@@ -1,7 +1,7 @@
 //package org.zerock.test;
 //
 //import java.math.BigDecimal;
-//import java.sql.Timestamp;
+//import java.time.LocalDateTime;
 //
 //import javax.transaction.Transactional;
 //
@@ -10,13 +10,12 @@
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.annotation.Commit;
+//import org.zerock.domain.admin.dto.request.AdminRequestDTO;
+//import org.zerock.domain.admin.service.AdminService;
 //import org.zerock.domain.betSeniorCare.repository.BetRepo;
 //import org.zerock.domain.caregiver.entity.Caregiver;
 //import org.zerock.domain.caregiver.repository.CaregiverRepo;
-//import org.zerock.domain.searched.dto.request.SearchedDTO;
-//import org.zerock.domain.searched.entity.Searched;
 //import org.zerock.domain.searched.repository.SearchRepo;
-//import org.zerock.domain.senior.dto.request.SeniorRequestDTO;
 //import org.zerock.domain.senior.entity.Senior;
 //import org.zerock.domain.senior.repository.SeniorRepo;
 //
@@ -40,6 +39,9 @@
 //	
 //	@Autowired
 //	BetRepo brepo;
+//	
+//	@Autowired
+//	AdminService adminService;
 	
 
 	
@@ -89,21 +91,21 @@
 //		
 //		BigDecimal val1 = BigDecimal.valueOf(12.12);
 //		String now = "2009-03-20 10:20:30.0";
-//		Timestamp val2 = Timestamp.valueOf(now);
+//		LocalDateTime dateTime = LocalDateTime.now();
 //	
 //		
 //		Caregiver caregiver = new Caregiver();
-//		caregiver.setName("박성동");
+//		caregiver.setName("김상남");
 //		caregiver.setBirth("19871029");
 //		caregiver.setGender(0);
 //		caregiver.setTel("01012341234");
-//		caregiver.setAddress("화성시");
+//		caregiver.setAddress("서울시");
 //		caregiver.setLati(val1);
 //		caregiver.setLon(val1);
-//		caregiver.setRegdate(val2);
-//		caregiver.setCid("123");
+//		caregiver.setRegdate(dateTime);
+//		caregiver.setCid("ksn");
 //		caregiver.setPwd("1234");
-//		caregiver.setRegCheck(1);
+//		caregiver.setRegCheck(0);
 //		caregiver.setCertilmage("me");
 //		
 //		caregiverRepo.save(caregiver);
@@ -131,15 +133,15 @@
 //		String val2 = "12.45";
 //		String val3 = "1";
 //		
-//		dto.setSid("123");
-//		dto.setPwd("12345");
-//		dto.setName("김미영");
+//		dto.setSid("kjk");
+//		dto.setPwd("1234");
+//		dto.setName("김우조");
 //		dto.setSpec1("등이 아파요");
 //		dto.setSpec2("거동이 불편합니다");
 //		dto.setSpec3("운동하는게 버겁습니다");
 //		dto.setTel("01012341234");
 //		dto.setTelCare("01023411345");
-//		dto.setAddress("인천특별시");
+//		dto.setAddress("서울특별시");
 //		dto.setLon(val1);
 //		dto.setLati(val2);
 //		dto.setBirth("19301029");
@@ -196,5 +198,22 @@
 //		
 //	}
 //		
+	
+//	@Test
+//	public void randomS( ) throws Exception {
+//		
+//		AdminRequestDTO dto = new AdminRequestDTO();
+//		dto.setCid("ksn");
+//		dto.setCpwd("1234");
+//		dto.setSid("");
+//		dto.setSpwd("1234");
+//		
+//		adminService.doingLogin(dto);
+//		
+//		int senior = srepo.findBySid(dto.getSid(), dto.getSpwd());
+//		System.out.println(senior);
+//			
+//	}
+//	
 //	}
 
