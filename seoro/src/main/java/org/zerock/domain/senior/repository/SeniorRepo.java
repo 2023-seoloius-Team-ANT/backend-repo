@@ -6,6 +6,7 @@ import org.zerock.domain.senior.entity.Senior;
 
 
 public interface SeniorRepo extends CrudRepository<Senior, Long> {
-	
 	public boolean existsBySid(String sid);
+	
+	Senior findBySeniorno(long sno);
 }
