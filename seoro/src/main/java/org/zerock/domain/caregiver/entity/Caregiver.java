@@ -114,6 +114,27 @@ public class Caregiver {
 				.build();
 				
 	}
+  
+  	public AdminResponseDTO puttingDTO(Caregiver caregiver) {
+		
+		LocalDate now = LocalDate.now(); //날짜 정보를 가져옴
+		int year = now.getYear(); // 현재 연도 얻기
+		
+		return AdminResponseDTO.builder()
+				.careno(String.valueOf(caregiver.getCareno()))
+				.name(caregiver.getName())
+				.char1(caregiver.getChar1())
+				.char2(caregiver.getChar2())
+				.char3(caregiver.getChar3())
+				.gender(String.valueOf(caregiver.getGender()))
+				.workTime(caregiver.getWorkTime())
+				.workday(caregiver.getWorkday())
+				.age(String.valueOf(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1))
+				.profile(caregiver.getProfile())
+				.certifi(caregiver.getCertifi())
+				.build();
+	}
 	
 
 }
+

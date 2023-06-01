@@ -15,7 +15,7 @@ public class ResponseFormat<T> {
         this.code = status.getCode();
         this.message = status.getMessage();
     }
-
+    
     public ResponseFormat(ResponseStatus status, T result){
         this.code = status.getCode();
         this.message = status.getMessage();
