@@ -163,9 +163,9 @@
 //		
 //		BigDecimal val1 = BigDecimal.valueOf(12.12);
 //		BigDecimal val2 = BigDecimal.valueOf(12.12);
-//		
-//		
-//		
+		
+		
+		
 //		senior.setSid("123");
 //		senior.setPwd("12345");
 //		senior.setName("김미영");
@@ -180,11 +180,13 @@
 //		senior.setBirth("19301029");
 //		senior.setGender(1);
 //		senior.setRegdate(val33);
+		
+//		senior = srepo.findById(1l).get();
+//		searched.setSenior(senior);
 //		
-//		
-//		dto.setSearchedadr("강남역 네네치킨");
-//		dto.setLati("453.21");
-//		dto.setLon("563.22");
+//		dto.setSearchedadr("동탄역 네네치킨");
+//		dto.setLati("1234.21");
+//		dto.setLon("2345.22");
 //		
 //		searched = searched.dtoToSearch(dto);
 //		searched.setRegdate(val33);

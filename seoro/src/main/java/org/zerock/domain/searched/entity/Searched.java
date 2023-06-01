@@ -52,6 +52,7 @@ public class Searched {
 	
 	public Searched dtoToSearch(SearchedDTO dto) {
 		
+		
 		return Searched.builder()
 				.searchedadr(dto.getSearchedadr())
 				.lon(BigDecimal.valueOf(Double.valueOf(dto.getLon())))
