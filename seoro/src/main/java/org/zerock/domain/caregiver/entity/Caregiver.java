@@ -2,6 +2,7 @@ package org.zerock.domain.caregiver.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
@@ -128,7 +130,7 @@ public class Caregiver {
 				.char3(caregiver.getChar3())
 				.gender(String.valueOf(caregiver.getGender()))
 				.workTime(caregiver.getWorkTime())
-				.workday(caregiver.getWorkday())
+				.workday(String.valueOf(caregiver.getWorkday()))
 				.age(String.valueOf(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1))
 				.profile(caregiver.getProfile())
 				.certifi(caregiver.getCertifi())

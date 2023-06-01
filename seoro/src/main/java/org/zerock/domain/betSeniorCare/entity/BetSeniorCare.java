@@ -34,8 +34,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "BETSENIORCARE")
-@AllArgsConstructor
-@NoArgsConstructor
 public class BetSeniorCare {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

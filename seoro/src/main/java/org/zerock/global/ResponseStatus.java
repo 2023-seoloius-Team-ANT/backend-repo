@@ -16,7 +16,7 @@ public enum ResponseStatus {
 	DECLINE_CAREGIVER_SUCCESS("ADM002", "요양사 회원 요청 거절 성공"),
 	
 	//검색내용 저장 성공 status
-	SEARCH_SAVE_SUCCESS("SH000", "검색내용 저장 성공");
+	SEARCH_SAVE_SUCCESS("SH000", "검색내용 저장 성공"),
 
   // caregiver(요양사) 응답 status
 	CAREGIVER_SIGNUP_SUCCESS("CA000", "요양사 회원 생성 성공"),
