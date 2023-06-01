@@ -2,6 +2,7 @@ package org.zerock.domain.caregiver.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,16 +17,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
+import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "CAREGIVER")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Caregiver {
 
 	
@@ -39,7 +50,7 @@ public class Caregiver {
 	private String name;
 	
 	@Column(nullable = false)
-	private Timestamp birth;
+	private String birth;
 	
 	@Column(nullable = false)
 	private int gender;
@@ -61,8 +72,6 @@ public class Caregiver {
 	
 	private String info; //요양사 q&a
 	
-	private String visitTime; //요양사 q&a
-	
 	private String exp; //요양사 q&a
 	private String certifi; //요양사 q&a
 	
@@ -76,8 +85,8 @@ public class Caregiver {
 	@Column(nullable = false)
 	private BigDecimal lati;
 	
-	@Column(nullable = false)
-	private Timestamp regdate;
+	@CreationTimestamp
+	private LocalDateTime regdate;
 	
 	@Column(nullable = false)
 	private String cid;
@@ -93,4 +102,18 @@ public class Caregiver {
 	@Column(nullable = false)
 	private String certilmage;
 	
+	public CaregiverResponseDTO toCaregiverResponseDTO(Caregiver cg) {
+		return CaregiverResponseDTO.builder()
+				.careno(cg.getCareno())
+				.name(cg.getName())
+				.char1(cg.getChar1())
+				.char2(cg.getChar2())
+				.char3(cg.getChar3())
+				.worktime(cg.getWorkTime())
+				.workday(cg.getWorkday())
+				.build();
+				
+	}
+	
+
 }

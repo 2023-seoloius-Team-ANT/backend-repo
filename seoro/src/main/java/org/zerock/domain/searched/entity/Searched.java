@@ -32,7 +32,7 @@ public class Searched {
 	private Senior senior;
 	
 	@Column(nullable = false)
-	private String address;
+	private String searchedadr;
 	
 	@Column(nullable = false)
 	private Timestamp regdate;
