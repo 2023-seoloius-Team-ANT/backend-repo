@@ -1,5 +1,6 @@
 package org.zerock.domain.caregiver.service;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -67,7 +68,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 			cg.setChar3(dto.getChar3());
 			cg.setWorkday(Integer.parseInt(dto.getWorkday()));
 			cg.setInfo(dto.getInfo());
-			cg.setVisitTime(dto.getVisittime());
+			cg.setWorkTime(dto.getWorkTime());
 			cg.setExp(dto.getExp());
 			cg.setCertifi(dto.getCertifi());
 			cg.setGood(dto.getGood());
@@ -112,7 +113,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 		if(queno == 1) { // 자기소개
 			dto.setAnswer(caregiver.getInfo());
 		} else if(queno == 2) { // 방문 일정
-			dto.setAnswer(caregiver.getVisitTime());
+			dto.setAnswer(caregiver.getWorkTime());
 		} else if (queno == 3) { // 경험
 			dto.setAnswer(caregiver.getExp());
 		} else if (queno == 4) { // 자격증
@@ -136,7 +137,10 @@ public class CaregiverServiceImpl implements CaregiverService{
 		CaregiverResponseDTO innercare = new CaregiverResponseDTO();
 		
 		for(Long listEle: strCaregiverList) { // 해당 월,년에 가능한 요양사 리스트 pk 하나씩 뽑기
+			System.out.println("몇번???  "  + listEle);
 			Caregiver cg = caregiverRepo.findById(listEle).get();
+			//System.out.println(cg.get);
+			System.out.println(cg);
 			
 			// 가능한 년, 월 기준으로 뽑은 리스트에서 거리 기준으로 한 번 더 거르기
 			double careLat = cg.getLati().doubleValue(); // 요양보호사 주소의 위도를 double로 형변환
@@ -144,14 +148,13 @@ public class CaregiverServiceImpl implements CaregiverService{
 			
 			// 거리를 계산하는 메소드를 통해 거리가 2km 이하의 요양사만 arrayList에 넣기
 			if(distance(careLat, careLon, lat.doubleValue(), lon.doubleValue()) <= 2) {
-				System.out.println(distance(careLat, careLon, lat.doubleValue(), lon.doubleValue())); // 거리 정상 출력인지 확인
 				innercare.setCareno(listEle);
 				innercare.setChar1(cg.getChar1());
 				innercare.setChar2(cg.getChar2());
 				innercare.setChar3(cg.getChar3());
 				innercare.setName(cg.getName());
 				innercare.setProfile(cg.getProfile());
-				innercare.setWorktime(cg.getWorkTime());	
+				//innercare.setWorktime(cg.getWorkTime());	
 				innercare.setWorkday(cg.getWorkday());
 				
 				//성별 -> 0:남성, 1: 여성
@@ -199,5 +202,6 @@ public class CaregiverServiceImpl implements CaregiverService{
         System.out.println(dist/1000);
         return (dist/1000);
     }
+    
 
 }

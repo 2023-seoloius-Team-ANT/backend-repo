@@ -1,6 +1,8 @@
 package org.zerock.global.aws;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -48,8 +50,12 @@ public class S3Service {
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
-
-            amazonS3.putObject(new PutObjectRequest(bucket, dir + "/" + fileName, multipartFile.getInputStream(), metadata)
+            
+            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+            Date now = new Date();
+            String nowTime1 = sdf1.format(now);
+            // 파일 이름이 겹치면 안들어감 -> 경로: dir + 파일 이름 + 현재 시간 + 1~100 랜덤 난수 발생 
+            amazonS3.putObject(new PutObjectRequest(bucket, dir + "/" + fileName + nowTime1 + Math.random()*100, multipartFile.getInputStream(), metadata)
                     .withCannedAcl(CannedAccessControlList.PublicRead));
         } catch (AmazonServiceException e) {
             e.printStackTrace();

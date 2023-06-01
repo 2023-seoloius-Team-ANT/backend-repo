@@ -17,7 +17,7 @@ public class UpdateInfoCaregiverRequestDTO {
 	private String char3;
 	private String workday;
 	private String info;
-	private String visittime;
+	private String workTime;
 	private String exp;
 	private String certifi;
 	private String good;
@@ -30,7 +30,7 @@ public class UpdateInfoCaregiverRequestDTO {
 				.char3(dto.getChar3())
 				.workday(Integer.parseInt(dto.getWorkday()))
 				.info(dto.getInfo())
-				.visitTime(dto.getVisittime())
+				.workTime(dto.getWorkTime())
 				.exp(dto.getExp())
 				.certifi(dto.getCertifi())
 				.good(dto.getGood())
