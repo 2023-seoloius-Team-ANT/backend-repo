@@ -11,7 +11,6 @@ import javax.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.zerock.domain.betSeniorCare.repository.BetRepo;
 import org.zerock.domain.caregiver.dto.request.CaregiverRequestDTO;
 import org.zerock.domain.caregiver.dto.request.UpdateInfoCaregiverRequestDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
@@ -34,9 +33,6 @@ public class CaregiverServiceImpl implements CaregiverService{
 	private SeniorRepo seniorRepo;
 	
 	@Autowired
-	private BetRepo betRepo;
-	
-	@Autowired
 	private S3Service s3Service;
 
 	@Override
@@ -45,7 +41,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 		if(caregiverRepo.existsByCid(dto.getCid())) { // caregiver 테이블에서 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
-		if(seniorRepo.existsByCid(dto.getCid())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
+		if(seniorRepo.existsBySid(dto.getCid())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
 		Caregiver saveCaregiver = dto.toCaregiverEntity(dto);
@@ -102,7 +98,6 @@ public class CaregiverServiceImpl implements CaregiverService{
 		dto.setAge(year - birthYear +1);
 		dto.setProfile(caregiver.getProfile());
 		return dto;
-		
 		
 	}
 
@@ -182,24 +177,27 @@ public class CaregiverServiceImpl implements CaregiverService{
 	
     
 
-	//두 좌표 간의 거리 계산 메소드 -> 리턴 값: km 단로 계
+	//10진수를 radian(라디안)으로 변환
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
-     
+    
+  //radian(라디안)을 10진수로 변환
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
 	
+  //두 좌표 간의 거리 계산 메소드 -> 리턴 값: km 단로 계산
     private static double distance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
          
         dist = Math.acos(dist);
         dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515 * 1.609344;
-        
-        return (dist);
+        dist = dist * 60*1.1515*1609.344;
+        System.out.println("확인");
+        System.out.println(dist/1000);
+        return (dist/1000);
     }
 
 }
