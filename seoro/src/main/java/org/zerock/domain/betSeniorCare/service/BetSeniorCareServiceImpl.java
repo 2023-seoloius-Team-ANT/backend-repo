@@ -80,15 +80,16 @@ public class BetSeniorCareServiceImpl implements BetSeniorCareService{
 		
 		List<BetSeniorCareResponseRsDTO> reserveListAll = new ArrayList<>();
 		
-		BetSeniorCareResponseRsDTO innerbet = new BetSeniorCareResponseRsDTO();
+		
 		
 		for (Long reservEle: strReserveList) { // pk 하나씩 확인
 			 BetSeniorCare betSeniorCare = betRepo.findById(reservEle).get();
 			 seniors = seniorRepo.findById(betSeniorCare.getSenior().getSeniorno()).get(); // 중간 테이블에 담긴 pk를 통해 senior유저의 정보를 찾는다.
-			 
+			 BetSeniorCareResponseRsDTO innerbet = new BetSeniorCareResponseRsDTO();
 			 innerbet.setConno(betSeniorCare.getConno()); // bet어쩌고의 pk
 			 innerbet.setName(seniors.getName());
 			 innerbet.setSeniorno(betSeniorCare.getSenior().getSeniorno());
+			 
 			 // 성별
 			 if(seniors.getGender() == 0) { // 남성
 				 innerbet.setGender("남");
@@ -117,12 +118,11 @@ public class BetSeniorCareServiceImpl implements BetSeniorCareService{
 		
 		List<BetSeniorCareResponseCfDTO> reserveListAll = new ArrayList<>();
 		
-		BetSeniorCareResponseCfDTO innerbet = new BetSeniorCareResponseCfDTO();
 		
 		for (Long reservEle: strReserveList) { // pk 하나씩 확인
 			 BetSeniorCare betSeniorCare = betRepo.findById(reservEle).get(); // bet 테이블에 해당하는 정보가 담겨있음
 			 seniors = seniorRepo.findById(betSeniorCare.getSenior().getSeniorno()).get(); // 중간 테이블에 담긴 pk를 통해 senior유저의 정보를 찾는다.
-			 
+			 BetSeniorCareResponseCfDTO innerbet = new BetSeniorCareResponseCfDTO();
 			 innerbet.setName(seniors.getName());
 			 innerbet.setMonth(betSeniorCare.getMonth());
 			 // 성별
