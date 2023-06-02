@@ -134,7 +134,9 @@ public class CaregiverServiceImpl implements CaregiverService{
 		
 		List<CaregiverResponseDTO> caregiverListAll = new ArrayList<>(); // 총 담을 dto;
 		
-		CaregiverResponseDTO innercare = new CaregiverResponseDTO();
+		
+		
+		int cnt =0;
 		
 		for(Long listEle: strCaregiverList) { // 해당 월,년에 가능한 요양사 리스트 pk 하나씩 뽑기
 			System.out.println("몇번???  "  + listEle);
@@ -145,6 +147,8 @@ public class CaregiverServiceImpl implements CaregiverService{
 			// 가능한 년, 월 기준으로 뽑은 리스트에서 거리 기준으로 한 번 더 거르기
 			double careLat = cg.getLati().doubleValue(); // 요양보호사 주소의 위도를 double로 형변환
 			double careLon = cg.getLon().doubleValue(); // 요양보호사 주소의 경도를 double로 형변환
+			
+			CaregiverResponseDTO innercare = new CaregiverResponseDTO();
 			
 			// 거리를 계산하는 메소드를 통해 거리가 2km 이하의 요양사만 arrayList에 넣기
 			if(distance(careLat, careLon, lat.doubleValue(), lon.doubleValue()) <= 2) {
@@ -171,10 +175,14 @@ public class CaregiverServiceImpl implements CaregiverService{
 				int birthYear = Integer.parseInt(birth.substring(0,4)); // 1998만 뽑아옴
 				innercare.setAge(thisYear - birthYear +1);
 				
-				caregiverListAll.add(innercare); // 조건에 맞는 요소는 ArrayList에 추가
+				System.out.println("들어갑니다~" +innercare.getName());
+				caregiverListAll.add(innercare);				//(innercare); // 조건에 맞는 요소는 ArrayList에 추가
+				System.out.println("ㄹㅇ 뭐지 " +caregiverListAll.get(cnt).getName());
+				cnt += 1;
 			}
 		}
-				
+
+		
 		return caregiverListAll;
 	}
 	

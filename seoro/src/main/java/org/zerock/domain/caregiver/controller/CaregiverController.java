@@ -36,6 +36,9 @@ public class CaregiverController {
 	// 요양사 회원가입 API
 	@PostMapping
 	public ResponseEntity<ResponseFormat<CaregiverResponseDTO>> createCaregiver(CaregiverRequestDTO dto, @RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage) throws Exception{
+		// aws bucket 추가되면 다시 실행
+		//@RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage)
+		
 		 if(profileImage == null || certiImage == null) { 
 			 log.info("파일이 존재하지 않습니다.");
 		 }
@@ -77,7 +80,7 @@ public class CaregiverController {
 		List<CaregiverResponseDTO> caregiverResponseDTO =  caregiverService.getCaregiverList(year, month, lon ,lat);
 		ResponseFormat<List<CaregiverResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_FILTERLIST_SUCCESS, caregiverResponseDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
-	}
+		}
 
 	
 }
