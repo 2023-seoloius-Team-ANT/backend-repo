@@ -1,7 +1,7 @@
 package org.zerock.domain.senior.entity;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.searched.entity.Searched;
 import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
@@ -66,7 +65,7 @@ public class Senior {
 	private BigDecimal lati;
 	
 	@Column(nullable = false)
-	private Timestamp regdate;
+	private LocalDateTime regdate;
 	
 	private String spec1;
 	private String spec2;

@@ -2,6 +2,7 @@ package org.zerock.domain.searched.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,7 +43,7 @@ public class Searched {
 	private String searchedadr;
 	
 	@Column(nullable = false)
-	private Timestamp regdate;
+	private LocalDateTime regdate;
 	
 	@Column(nullable = false)
 	private BigDecimal lon;

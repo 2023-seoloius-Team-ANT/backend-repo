@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.searched.dto.request.SearchedDTO;
@@ -22,7 +23,7 @@ public class SearchedController {
 	SearchedService searchedService;
 	
 	@PostMapping("/search/{seniorno}") //위치검색시 검색 기록 저장하는 API
-	public ResponseEntity<ResponseFormat<ResponseStatus>> savingSearch(SearchedDTO dto, @PathVariable Long seniorno) throws Exception {
+	public ResponseEntity<ResponseFormat<ResponseStatus>> savingSearch(@RequestBody SearchedDTO dto, @PathVariable Long seniorno) throws Exception {
 		
 		searchedService.savingSearch(dto, seniorno);
 		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.SEARCH_SAVE_SUCCESS);

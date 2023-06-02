@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.senior.dto.request.SeniorRequestDTO;
@@ -23,7 +24,7 @@ public class SeniorController {
 	SeniorService seniorService;
 	
 	@PostMapping("/senior") //노인회원가입 등록 API
-	public ResponseEntity<ResponseFormat<ResponseStatus>> regSenior(SeniorRequestDTO dto) throws Exception {
+	public ResponseEntity<ResponseFormat<ResponseStatus>> regSenior(@RequestBody SeniorRequestDTO dto) throws Exception {
 		seniorService.regSenior(dto);
 		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.SENIOR_SIGNUP_SUCCESS);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);

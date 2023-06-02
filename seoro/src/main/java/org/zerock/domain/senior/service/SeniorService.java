@@ -9,8 +9,8 @@ import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
 @Service
 public interface SeniorService {
 	
-	public void regSenior(SeniorRequestDTO dto);
+	public void regSenior(SeniorRequestDTO dto) throws Exception;
 	
-	public SeniorResponseDTO detailSenior(Long seniorno);
+	public SeniorResponseDTO detailSenior(Long seniorno) throws Exception;
 	
 }

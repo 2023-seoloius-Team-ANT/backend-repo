@@ -6,5 +6,5 @@ import org.zerock.domain.searched.dto.request.SearchedDTO;
 @Service
 public interface SearchedService {
 
-	public void savingSearch(SearchedDTO dto, Long seniorno);
+	public void savingSearch(SearchedDTO dto, Long seniorno) throws Exception;
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.admin.Login.LoginFailedException;
+import org.zerock.domain.admin.Login.RejectedException;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.caregiver.entity.Caregiver;
@@ -57,8 +58,12 @@ public class AdminServiceImpl implements AdminService {
 		int senior = seniorRepo.findBySid(dto.getSid(), dto.getSpwd());	
 		int caregiver = caregiverRepo.findByCid(dto.getCid(), dto.getCpwd());
 		
+		Caregiver cReg = caregiverRepo.findByCreg(dto.getCid(), dto.getCpwd());
+		
 		if(senior == 0 && caregiver == 0) {
-			throw new LoginFailedException("아이디 혹은 비밀번호가 잘못되었습니다.");
+			throw new LoginFailedException("아이디 혹은 비밀번호가 잘못되었습니다."); //로그인 실패시 강제예외 발생
+		} else if(cReg.getRegCheck() == 2) {
+			throw new RejectedException("승인이 거절된 회원이므로 로그인 실패"); 
 		} else {
 			log.info("로그인 성공");
 		}

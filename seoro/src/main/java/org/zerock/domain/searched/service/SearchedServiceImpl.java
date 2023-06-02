@@ -1,5 +1,7 @@
 package org.zerock.domain.searched.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.domain.searched.dto.request.SearchedDTO;
@@ -18,12 +20,15 @@ public class SearchedServiceImpl implements SearchedService {
 	SeniorRepo seniorRepo;
 	
 	@Override
-	public void savingSearch(SearchedDTO dto, Long seniorno) {
+	public void savingSearch(SearchedDTO dto, Long seniorno) throws Exception {
 		Searched searched = new Searched();
 		searched = searched.dtoToSearch(dto);
 		
 		Senior senior = seniorRepo.findById(seniorno).get();
 		searched.setSenior(senior);
+		
+		LocalDateTime time = LocalDateTime.now();
+		searched.setRegdate(time);
 		
 		searchRepo.save(searched);
 	}
