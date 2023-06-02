@@ -5,15 +5,13 @@ package org.zerock.domain.admin.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityExistsException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.zerock.domain.admin.Login.LoginFailedException;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.domain.caregiver.repository.CaregiverRepo;
-import org.zerock.domain.senior.entity.Senior;
 import org.zerock.domain.senior.repository.SeniorRepo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +58,7 @@ public class AdminServiceImpl implements AdminService {
 		int caregiver = caregiverRepo.findByCid(dto.getCid(), dto.getCpwd());
 		
 		if(senior == 0 && caregiver == 0) {
-			log.info("로그인 실패");
+			throw new LoginFailedException("아이디 혹은 비밀번호가 잘못되었습니다.");
 		} else {
 			log.info("로그인 성공");
 		}
