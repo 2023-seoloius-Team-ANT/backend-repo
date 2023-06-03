@@ -38,14 +38,21 @@ public class BetSeniorCareServiceImpl implements BetSeniorCareService{
 			throw new Exception("유효하지 않은 요양사 아이디 정보입니다.");
 		}
 		
-		BetSeniorCare betSeniorCare = new BetSeniorCare();
-		betSeniorCare.setCaregiver(caregiver);
-		betSeniorCare.setSenior(senior);
-		betSeniorCare.setMonth(Integer.parseInt(dto.getMonth()));
-		betSeniorCare.setYear(Integer.parseInt(dto.getYear()));
-		betSeniorCare.setStateck(0); // 0은 디폴트 (초기 설정)
+		Optional<BetSeniorCare> dupliCk = betRepo.duplicateCk(Integer.parseInt(dto.getYear()), Integer.parseInt(dto.getMonth()), caregiver.getCareno(), senior.getSeniorno());
 		
-		betRepo.save(betSeniorCare);
+		if(dupliCk.isPresent()) {
+			throw new Exception("이미 해당 년월에 예약한 내역이 존재합니다.");
+		}else {
+			BetSeniorCare betSeniorCare = new BetSeniorCare();
+			betSeniorCare.setCaregiver(caregiver);
+			betSeniorCare.setSenior(senior);
+			betSeniorCare.setMonth(Integer.parseInt(dto.getMonth()));
+			betSeniorCare.setYear(Integer.parseInt(dto.getYear()));
+			betSeniorCare.setStateck(0); // 0은 디폴트 (초기 설정)
+			
+			betRepo.save(betSeniorCare);
+		}
+		
 	}
 
 
