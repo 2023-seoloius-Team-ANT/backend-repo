@@ -33,5 +33,7 @@ public interface CaregiverRepo extends CrudRepository<Caregiver, Long> {
 	public int findByCid(String cid, String pwd);
 	
 	@Query(value = "SELECT * FROM seoro.caregiver c WHERE c.cid = ?1 and c.pwd = ?2", nativeQuery = true)
-	public Caregiver findByCreg(String cid, String pwd);
+	public Caregiver findByCaregiver(String cid, String pwd);
+	
+	
 }

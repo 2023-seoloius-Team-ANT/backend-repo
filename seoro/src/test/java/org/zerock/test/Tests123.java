@@ -100,13 +100,13 @@
 //		caregiver.setBirth("19991029");
 //		caregiver.setGender(1);
 //		caregiver.setTel("01012341234");
-//		caregiver.setAddress("인천시");
+//		caregiver.setAddress("제주시");
 //		caregiver.setLati(val1);
 //		caregiver.setLon(val1);
 //		caregiver.setRegdate(dateTime);
 //		caregiver.setCid("kws");
-//		caregiver.setPwd("1000");
-//		caregiver.setRegCheck(2);
+//		caregiver.setPwd("1233");
+//		caregiver.setRegCheck(0);
 //		caregiver.setCertilmage("me");
 //		
 //		caregiverRepo.save(caregiver);
@@ -128,14 +128,14 @@
 //		Senior senior = new Senior();
 //		
 //		String now = "2009-03-20 10:20:30.0";
-//		Timestamp val33 = Timestamp.valueOf(now);
+//		LocalDateTime val345 = LocalDateTime.now();
 //		
 //		String val1 = "12.12";
 //		String val2 = "12.45";
 //		String val3 = "1";
 //		
 //		dto.setSid("ksy");
-//		dto.setPwd("1234");
+//		dto.setPwd("12345");
 //		dto.setName("강순옥");
 //		dto.setSpec1("등이 아파요");
 //		dto.setSpec2("거동이 불편합니다");
@@ -149,7 +149,7 @@
 //		dto.setGender(val3);
 //		
 //		senior = dto.seniorForEntity(dto);
-//		senior.setRegdate(val33);
+//		senior.setRegdate(val345);
 //		srepo.save(senior);
 //	}
 	

@@ -16,4 +16,7 @@ public interface SeniorRepo extends CrudRepository<Senior, Long> {
 	@Query(value = "SELECT count(*) FROM seoro.senior s WHERE s.sid = ?1 and s.pwd = ?2", nativeQuery = true)
 	public int findBySid(String sid, String pwd);
 	
+	@Query(value = "SELECT * FROM seoro.senior s WHERE s.sid = ?1 and s.pwd = ?2", nativeQuery = true)
+	public Senior findBySenior(String sid, String pwd);
+	
 }

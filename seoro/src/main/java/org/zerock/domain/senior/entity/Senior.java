@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.searched.entity.Searched;
 import org.zerock.domain.senior.dto.response.SeniorResponseDTO;
@@ -77,6 +78,8 @@ public class Senior {
 	@Column(nullable = false)
 	private String pwd;
 	
+	private String roles;
+	
 	public SeniorResponseDTO responseSeniorDto(Senior senior) {
 		
 		BetSeniorCare betSeniorCare = new BetSeniorCare();
@@ -91,6 +94,18 @@ public class Senior {
 				.spec1(senior.getSpec1())
 				.spec2(senior.getSpec2())
 				.spec3(senior.getSpec3())
+				.address(senior.getAddress())
+				.lon(senior.getLon().toString())
+				.lati(senior.getLati().toString())
+				.build();
+	}
+	
+	public AdminResponseBothDTO responseBothSeni(Senior senior) {
+		
+		return AdminResponseBothDTO.builder()
+				.numberPk(String.valueOf(senior.getSeniorno()))
+				.name(senior.getName())
+				.roles(senior.getRoles())
 				.address(senior.getAddress())
 				.lon(senior.getLon().toString())
 				.lati(senior.getLati().toString())

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
+import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.service.AdminService;
 import org.zerock.global.ResponseFormat;
@@ -52,9 +53,9 @@ public class AdminController {
 	}
 	
 	@PostMapping("/login") //로그인(공통) API
-	public ResponseEntity<ResponseFormat<ResponseStatus>> doingLogin(@RequestBody AdminRequestDTO dto) throws Exception {
-		adminService.doingLogin(dto);
-		ResponseFormat<ResponseStatus> responseFormat = new ResponseFormat<>(ResponseStatus.SORC_LOGIN_SUCCESS);
+	public ResponseEntity<ResponseFormat<AdminResponseBothDTO>> doingLogin(@RequestBody AdminRequestDTO dto) throws Exception {
+		AdminResponseBothDTO responseBoth = adminService.doingLogin(dto);
+		ResponseFormat<AdminResponseBothDTO> responseFormat = new ResponseFormat<>(ResponseStatus.SORC_LOGIN_SUCCESS, responseBoth);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	

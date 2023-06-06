@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
@@ -104,6 +105,8 @@ public class Caregiver {
 	@Column(nullable = false)
 	private String certilmage;
 	
+	private String roles;
+	
 	public CaregiverResponseDTO toCaregiverResponseDTO(Caregiver cg) {
 		return CaregiverResponseDTO.builder()
 				.careno(cg.getCareno())
@@ -136,6 +139,18 @@ public class Caregiver {
 				.certifi(caregiver.getCertifi())
 				.build();
 	}
+  	
+  	public AdminResponseBothDTO responseBothCare(Caregiver caregiver) {
+  		
+  		return AdminResponseBothDTO.builder()
+  				.numberPk(String.valueOf(caregiver.getCareno()))
+  				.name(caregiver.getName())
+  				.roles(caregiver.getRoles())
+  				.address(caregiver.getAddress())
+  				.lon(caregiver.getLon().toString())
+  				.lati(caregiver.getLati().toString())
+  				.build();
+  	}
 	
 
 }

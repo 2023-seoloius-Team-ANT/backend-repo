@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
+import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 
 
@@ -16,5 +17,5 @@ public interface AdminService {
 	
 	public void declineCare(Long careno) throws Exception;
 	
-	public void doingLogin(AdminRequestDTO dto) throws Exception;
+	public AdminResponseBothDTO doingLogin(AdminRequestDTO dto) throws Exception;
 }
