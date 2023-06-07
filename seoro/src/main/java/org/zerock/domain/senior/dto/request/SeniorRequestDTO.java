@@ -18,7 +18,7 @@ import lombok.Setter;
 @Builder
 public class SeniorRequestDTO {
 	
-	private String sid;
+	private String id;
 	private String pwd;
 	private String name;
 	private String spec1;
@@ -35,7 +35,7 @@ public class SeniorRequestDTO {
 	public Senior seniorForEntity(SeniorRequestDTO dto) {
 		
 		return Senior.builder()
-				.sid(dto.getSid())
+				.sid(dto.getId())
 				.pwd(dto.getPwd())
 				.name(dto.getName())
 				.spec1(dto.getSpec1())

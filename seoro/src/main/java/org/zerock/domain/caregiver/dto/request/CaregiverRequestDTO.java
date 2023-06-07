@@ -16,7 +16,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 public class CaregiverRequestDTO {
-	private String cid;
+	private String id;
 	private String pwd;
 	private String name;
 	private String tel;
@@ -31,7 +31,7 @@ public class CaregiverRequestDTO {
 	// entity로 변환시키기
 	public Caregiver toCaregiverEntity(CaregiverRequestDTO dto) {
 		return Caregiver.builder()
-				.cid(dto.getCid())
+				.cid(dto.getId())
 				.pwd(dto.getPwd())
 				.name(dto.getName())
 				.tel(dto.getTel())

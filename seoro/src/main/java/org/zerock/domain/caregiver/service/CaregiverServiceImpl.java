@@ -1,6 +1,5 @@
 package org.zerock.domain.caregiver.service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,12 +36,12 @@ public class CaregiverServiceImpl implements CaregiverService{
 	private S3Service s3Service;
 
 	@Override
-	public void createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception {
+	public long createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception {
 		// 이미 있는 아이디인지 검증
-		if(caregiverRepo.existsByCid(dto.getCid())) { // caregiver 테이블에서 중복된 id가 있으면 예외 발생
+		if(caregiverRepo.existsByCid(dto.getId())) { // caregiver 테이블에서 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
-		if(seniorRepo.existsBySid(dto.getCid())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
+		if(seniorRepo.existsBySid(dto.getId())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
 		Caregiver saveCaregiver = dto.toCaregiverEntity(dto);
@@ -50,12 +49,11 @@ public class CaregiverServiceImpl implements CaregiverService{
 		String profileUrl = s3Service.uploadFile(profile, "profile"); // 앞은 파일, 뒤는 aws의 디렉토리 경로
 		String certiUrl = s3Service.uploadFile(certiImage, "certificate"); // 앞은 파일, 뒤는 aws의 디렉토리 경로
 		
-		// 이미지 경로 db에 저장
+		// 이미지 경로 db에 저장 
 		saveCaregiver.setProfile(profileUrl);
 		saveCaregiver.setCertilmage(certiUrl);
-		
 		caregiverRepo.save(saveCaregiver);
-		
+		return saveCaregiver.getCareno();
 	}
 
 	@Override
