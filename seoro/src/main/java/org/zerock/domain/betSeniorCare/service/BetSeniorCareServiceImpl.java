@@ -118,10 +118,10 @@ public class BetSeniorCareServiceImpl implements BetSeniorCareService{
 
 
 	@Override
-	public List<BetSeniorCareResponseCfDTO> getconfirmList(long careno) throws Exception {
+	public List<BetSeniorCareResponseCfDTO> getconfirmList(long careno, int yearfilter) throws Exception {
 		Senior seniors = new Senior();
 		
-		List<Long> strReserveList = betRepo.findByCarenoStateckCfDESC(careno); // 쿼리에 해당하는 bet어쩌고의 pk
+		List<Long> strReserveList = betRepo.findByCarenoStateckCfDESC(careno, yearfilter); // 쿼리에 해당하는 bet어쩌고의 pk
 		
 		List<BetSeniorCareResponseCfDTO> reserveListAll = new ArrayList<>();
 		
