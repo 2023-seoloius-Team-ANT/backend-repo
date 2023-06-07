@@ -37,6 +37,13 @@ public class SeniorServiceImpl implements SeniorService {
 		Senior senior = new Senior();
 		senior = seniorRepo.findById(seniorno).get();
 		SeniorResponseDTO dto = senior.responseSeniorDto(senior);
+		// 성별
+		 if(senior.getGender() == 0) { // 남성
+			 dto.setGender("남성");
+		 } else {
+			 dto.setGender("여성");
+		 }
+		
 		return dto;
 	}
 	
