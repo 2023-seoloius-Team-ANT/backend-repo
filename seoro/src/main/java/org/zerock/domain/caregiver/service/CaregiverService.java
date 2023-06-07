@@ -12,7 +12,7 @@ import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
 
 @Service
 public interface CaregiverService {
-	public void createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception;
+	public long createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception;
 	
 	public CaregiverResponseDTO getCaregiverById(long careno) throws Exception;
 	

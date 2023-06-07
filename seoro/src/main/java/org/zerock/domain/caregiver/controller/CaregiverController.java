@@ -1,6 +1,7 @@
 package org.zerock.domain.caregiver.controller;
 
 import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ import org.zerock.domain.caregiver.dto.request.CaregiverRequestDTO;
 import org.zerock.domain.caregiver.dto.request.UpdateInfoCaregiverRequestDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverQueResponseDTO;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
+import org.zerock.domain.caregiver.dto.response.CarnoResponseDTO;
 import org.zerock.domain.caregiver.service.CaregiverService;
 import org.zerock.global.ResponseFormat;
 import org.zerock.global.ResponseStatus;
-import org.zerock.global.aws.S3Service;
 
 import lombok.extern.java.Log;
 
@@ -33,16 +34,20 @@ public class CaregiverController {
 	@Autowired
 	private CaregiverService caregiverService;
 	
+	
 	// 요양사 회원가입 API
 	@PostMapping
-	public ResponseEntity<ResponseFormat<CaregiverResponseDTO>> createCaregiver(CaregiverRequestDTO dto, @RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage) throws Exception{
+	public ResponseEntity<ResponseFormat<CarnoResponseDTO>> createCaregiver(CaregiverRequestDTO dto, @RequestPart("profileImage") MultipartFile profileImage, @RequestPart("certiImage") MultipartFile certiImage) throws Exception{
+		
 		 if(profileImage == null || certiImage == null) { 
 			 log.info("파일이 존재하지 않습니다.");
 		 }
 		 
-		 
-		caregiverService.createCaregiver(dto, profileImage, certiImage);
-		ResponseFormat<CaregiverResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_SIGNUP_SUCCESS);
+		long careno = caregiverService.createCaregiver(dto, profileImage, certiImage);
+		CarnoResponseDTO caregiver= new CarnoResponseDTO();
+		caregiver.setCareno(careno);
+		
+		ResponseFormat<CarnoResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_SIGNUP_SUCCESS, caregiver);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 		
 	}
@@ -77,7 +82,7 @@ public class CaregiverController {
 		List<CaregiverResponseDTO> caregiverResponseDTO =  caregiverService.getCaregiverList(year, month, lon ,lat);
 		ResponseFormat<List<CaregiverResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_FILTERLIST_SUCCESS, caregiverResponseDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
-	}
+		}
 
 	
 }

@@ -1,6 +1,5 @@
 package org.zerock.domain.caregiver.service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -37,12 +36,12 @@ public class CaregiverServiceImpl implements CaregiverService{
 	private S3Service s3Service;
 
 	@Override
-	public void createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception {
+	public long createCaregiver(CaregiverRequestDTO dto, MultipartFile profile, MultipartFile certiImage) throws Exception {
 		// 이미 있는 아이디인지 검증
-		if(caregiverRepo.existsByCid(dto.getCid())) { // caregiver 테이블에서 중복된 id가 있으면 예외 발생
+		if(caregiverRepo.existsByCid(dto.getId())) { // caregiver 테이블에서 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
-		if(seniorRepo.existsBySid(dto.getCid())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
+		if(seniorRepo.existsBySid(dto.getId())) { // senior 테이블에서도 중복된 id가 있으면 예외 발생
 			throw new EntityExistsException();
 		}
 		Caregiver saveCaregiver = dto.toCaregiverEntity(dto);
@@ -50,12 +49,11 @@ public class CaregiverServiceImpl implements CaregiverService{
 		String profileUrl = s3Service.uploadFile(profile, "profile"); // 앞은 파일, 뒤는 aws의 디렉토리 경로
 		String certiUrl = s3Service.uploadFile(certiImage, "certificate"); // 앞은 파일, 뒤는 aws의 디렉토리 경로
 		
-		// 이미지 경로 db에 저장
+		// 이미지 경로 db에 저장 
 		saveCaregiver.setProfile(profileUrl);
 		saveCaregiver.setCertilmage(certiUrl);
-		
 		caregiverRepo.save(saveCaregiver);
-		
+		return saveCaregiver.getCareno();
 	}
 
 	@Override
@@ -134,17 +132,18 @@ public class CaregiverServiceImpl implements CaregiverService{
 		
 		List<CaregiverResponseDTO> caregiverListAll = new ArrayList<>(); // 총 담을 dto;
 		
-		CaregiverResponseDTO innercare = new CaregiverResponseDTO();
+		
+		
+		int cnt =0;
 		
 		for(Long listEle: strCaregiverList) { // 해당 월,년에 가능한 요양사 리스트 pk 하나씩 뽑기
-			System.out.println("몇번???  "  + listEle);
 			Caregiver cg = caregiverRepo.findById(listEle).get();
-			//System.out.println(cg.get);
-			System.out.println(cg);
 			
 			// 가능한 년, 월 기준으로 뽑은 리스트에서 거리 기준으로 한 번 더 거르기
 			double careLat = cg.getLati().doubleValue(); // 요양보호사 주소의 위도를 double로 형변환
 			double careLon = cg.getLon().doubleValue(); // 요양보호사 주소의 경도를 double로 형변환
+			
+			CaregiverResponseDTO innercare = new CaregiverResponseDTO();
 			
 			// 거리를 계산하는 메소드를 통해 거리가 2km 이하의 요양사만 arrayList에 넣기
 			if(distance(careLat, careLon, lat.doubleValue(), lon.doubleValue()) <= 2) {
@@ -154,8 +153,9 @@ public class CaregiverServiceImpl implements CaregiverService{
 				innercare.setChar3(cg.getChar3());
 				innercare.setName(cg.getName());
 				innercare.setProfile(cg.getProfile());
-				//innercare.setWorktime(cg.getWorkTime());	
+				innercare.setWorktime(cg.getWorkTime());	
 				innercare.setWorkday(cg.getWorkday());
+				System.out.println(cg.getProfile());
 				
 				//성별 -> 0:남성, 1: 여성
 				if(cg.getGender() == 0) {
@@ -171,10 +171,12 @@ public class CaregiverServiceImpl implements CaregiverService{
 				int birthYear = Integer.parseInt(birth.substring(0,4)); // 1998만 뽑아옴
 				innercare.setAge(thisYear - birthYear +1);
 				
-				caregiverListAll.add(innercare); // 조건에 맞는 요소는 ArrayList에 추가
+				caregiverListAll.add(innercare);// 조건에 맞는 요소는 ArrayList에 추가
+				cnt += 1;
 			}
 		}
-				
+
+		
 		return caregiverListAll;
 	}
 	

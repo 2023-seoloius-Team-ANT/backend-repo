@@ -22,7 +22,7 @@ public class SeniorServiceImpl implements SeniorService {
 		
 		Senior senior = new Senior();
 		
-		if(seniorRepo.existsBySid(dto.getSid())) {
+		if(seniorRepo.existsBySid(dto.getId())) {
 			throw new EntityExistsException();
 		} else {
 		LocalDateTime time = LocalDateTime.now();	
