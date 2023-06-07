@@ -57,17 +57,17 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public AdminResponseBothDTO doingLogin(AdminRequestDTO dto) throws Exception {	//로그인(공통)
-		int seniorCount = seniorRepo.findBySid(dto.getSid(), dto.getSpwd());	
-		int caregiverCount = caregiverRepo.findByCid(dto.getCid(), dto.getCpwd());
+		int seniorCount = seniorRepo.findBySid(dto.getId(), dto.getPwd());	
+		int caregiverCount = caregiverRepo.findByCid(dto.getId(), dto.getPwd());
 		
-		Caregiver cReg = caregiverRepo.findByCaregiver(dto.getCid(), dto.getCpwd());
+		Caregiver cReg = caregiverRepo.findByCaregiver(dto.getId(), dto.getPwd());
 		
 		if(seniorCount == 0 && caregiverCount == 0) {
 			throw new LoginFailedException("아이디 혹은 비밀번호가 잘못되었습니다."); //로그인 실패시 강제예외 발생
 			
 		} else if(seniorCount == 1) { //노인이 로그인 성공했을때
 			log.info("노인 로그인 성공");
-			Senior senior = seniorRepo.findBySenior(dto.getSid(), dto.getSpwd());
+			Senior senior = seniorRepo.findBySenior(dto.getId(), dto.getPwd());
 			AdminResponseBothDTO responseBoth = senior.responseBothSeni(senior);
 			return responseBoth;
 			
@@ -76,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
 			
 		} else if(caregiverCount == 1) { //요양사가 로그인 성공했을때
 			log.info("요양사 로그인 성공");
-			Caregiver caregiver = caregiverRepo.findByCaregiver(dto.getCid(), dto.getCpwd());
+			Caregiver caregiver = caregiverRepo.findByCaregiver(dto.getId(), dto.getPwd());
 			AdminResponseBothDTO responseBoth = caregiver.responseBothCare(caregiver);
 			return responseBoth;	
 			
