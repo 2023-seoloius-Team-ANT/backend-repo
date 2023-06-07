@@ -57,9 +57,9 @@ public class BetSeniorCareController {
 	}
 	
 	// 예약 확정된 노인 리스트 불러오는 API
-	@GetMapping("/confirm/{careno}")
-	public ResponseEntity<ResponseFormat<List<BetSeniorCareResponseCfDTO>>> getconfirmList(@PathVariable long careno) throws Exception{
-		List<BetSeniorCareResponseCfDTO> betSeniorCareResponseRsDTO =connectService.getconfirmList(careno);
+	@GetMapping("/confirm/{careno}/{year}")
+	public ResponseEntity<ResponseFormat<List<BetSeniorCareResponseCfDTO>>> getconfirmList(@PathVariable long careno, @PathVariable int year) throws Exception{
+		List<BetSeniorCareResponseCfDTO> betSeniorCareResponseRsDTO =connectService.getconfirmList(careno, year);
 		ResponseFormat<List<BetSeniorCareResponseCfDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.CONNECT_CONFIRMLIST_SUCCESS, betSeniorCareResponseRsDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}

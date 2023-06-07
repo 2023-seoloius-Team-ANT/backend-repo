@@ -18,5 +18,5 @@ public interface BetSeniorCareService {
 
 	public List<BetSeniorCareResponseRsDTO> getreserveList(long careno) throws Exception;
 
-	public List<BetSeniorCareResponseCfDTO> getconfirmList(long careno) throws Exception;
+	public List<BetSeniorCareResponseCfDTO> getconfirmList(long careno, int year) throws Exception;
 }
