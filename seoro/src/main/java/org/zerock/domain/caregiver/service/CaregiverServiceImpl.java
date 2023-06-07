@@ -59,7 +59,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 	@Override
 	public void updateInfoCaregiver(UpdateInfoCaregiverRequestDTO dto, long cid) throws Exception {
 		Optional<Caregiver> updateCaregiver = caregiverRepo.findById(cid);
-		
+		System.out.println(dto.getWorkday());
 		updateCaregiver.ifPresent(cg -> {
 			cg.setChar1(dto.getChar1());
 			cg.setChar2(dto.getChar2());
@@ -67,6 +67,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 			cg.setWorkday(Integer.parseInt(dto.getWorkday()));
 			cg.setInfo(dto.getInfo());
 			cg.setWorkTime(dto.getWorkTime());
+			cg.setService(dto.getService());
 			cg.setExp(dto.getExp());
 			cg.setCertifi(dto.getCertifi());
 			cg.setGood(dto.getGood());
@@ -153,7 +154,8 @@ public class CaregiverServiceImpl implements CaregiverService{
 				innercare.setChar3(cg.getChar3());
 				innercare.setName(cg.getName());
 				innercare.setProfile(cg.getProfile());
-				innercare.setWorktime(cg.getWorkTime());	
+				innercare.setWorktime(cg.getWorkTime());
+				innercare.setService(cg.getService());
 				innercare.setWorkday(cg.getWorkday());
 				System.out.println(cg.getProfile());
 				

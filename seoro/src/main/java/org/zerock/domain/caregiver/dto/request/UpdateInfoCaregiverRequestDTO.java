@@ -22,6 +22,7 @@ public class UpdateInfoCaregiverRequestDTO {
 	private String certifi;
 	private String good;
 	private String goal;
+	private String service;
 	
 	public Caregiver toCaregiverEntity(UpdateInfoCaregiverRequestDTO dto) {
 		return Caregiver.builder()
@@ -35,6 +36,7 @@ public class UpdateInfoCaregiverRequestDTO {
 				.certifi(dto.getCertifi())
 				.good(dto.getGood())
 				.goal(dto.getGoal())
+				.service(dto.getService())
 				.build();
 	}
 }

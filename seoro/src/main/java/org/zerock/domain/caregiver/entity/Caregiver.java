@@ -92,6 +92,8 @@ public class Caregiver {
 	
 	private int workday;
 	
+	private String service;
+	
 	@Column(nullable = false)
 	private int regCheck; // 0은 기본 상태, 1은 승인 상태, 2는 거절 상태를 의미합니다.
 	
