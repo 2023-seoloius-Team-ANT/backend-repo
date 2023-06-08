@@ -1,20 +1,28 @@
 //package org.zerock.test;
 //
-//import javax.persistence.Column;
+//import java.math.BigDecimal;
+//import java.sql.Timestamp;
+//import java.time.LocalDateTime;
+//
+//import javax.transaction.Transactional;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.annotation.Commit;
-//import org.zerock.domain.betSeniorCare.BetRepo;
-//import org.zerock.domain.caregiver.CaregiverRepo;
-//import org.zerock.domain.searched.SearchRepo;
-//import org.zerock.domain.senior.Senior;
-//import org.zerock.domain.senior.SeniorRepo;
+//import org.zerock.domain.admin.service.AdminService;
+//import org.zerock.domain.betSeniorCare.repository.BetRepo;
+//import org.zerock.domain.caregiver.entity.Caregiver;
+//import org.zerock.domain.caregiver.repository.CaregiverRepo;
+//import org.zerock.domain.searched.repository.SearchRepo;
+//import org.zerock.domain.senior.dto.request.SeniorRequestDTO;
+//import org.zerock.domain.senior.entity.Senior;
+//import org.zerock.domain.senior.repository.SeniorRepo;
 //
 //import lombok.extern.java.Log;
 //
+//@Transactional
 //@AutoConfigureMockMvc
 //@SpringBootTest
 //@Log
@@ -28,13 +36,16 @@
 //	SearchRepo searchRepo;
 //	
 //	@Autowired
-//	CaregiverRepo caregiver;
+//	CaregiverRepo caregiverRepo;
 //	
 //	@Autowired
 //	BetRepo brepo;
 //	
-//
-//	
+//	@Autowired
+//	AdminService adminService;
+	
+
+	
 //	@Test
 //	public void seniorBet() {
 //		
@@ -59,7 +70,7 @@
 //		brepo.save(bet);
 //		
 //	}
-//	
+	
 //	@Test
 //	public void seniorSearch() {
 //		
@@ -75,4 +86,133 @@
 //		
 //		
 //	}
-//}
+	
+//	@Test
+//	public void waitCare2() {
+//		
+//		BigDecimal val1 = BigDecimal.valueOf(12.12);
+//		String now = "2009-03-20 10:20:30.0";
+//		LocalDateTime dateTime = LocalDateTime.now();
+//	
+//		
+//		Caregiver caregiver = new Caregiver();
+//		caregiver.setName("김옥순");
+//		caregiver.setBirth("19991029");
+//		caregiver.setGender(1);
+//		caregiver.setTel("01012341234");
+//		caregiver.setAddress("제주시");
+//		caregiver.setLati(val1);
+//		caregiver.setLon(val1);
+//		caregiver.setRegdate(dateTime);
+//		caregiver.setCid("kws");
+//		caregiver.setPwd("1233");
+//		caregiver.setRegCheck(0);
+//		caregiver.setCertilmage("me");
+//		
+//		caregiverRepo.save(caregiver);
+//		
+//		}
+	
+//	@Test
+//	public void updateCare() {
+//		
+//		Long careno = 1L;
+//		int count = caregiverRepo.changeCare(careno, 0);
+//		log.info("update count: " + count);
+//	}
+	
+//	@Test
+//	public void signupSenior() { //노인회원가입 테스트
+//		
+//		SeniorRequestDTO dto = new SeniorRequestDTO();
+//		Senior senior = new Senior();
+//		
+//		String now = "2009-03-20 10:20:30.0";
+//		LocalDateTime val345 = LocalDateTime.now();
+//		
+//		String val1 = "12.12";
+//		String val2 = "12.45";
+//		String val3 = "1";
+//		
+//		dto.setSid("ksy");
+//		dto.setPwd("12345");
+//		dto.setName("강순옥");
+//		dto.setSpec1("등이 아파요");
+//		dto.setSpec2("거동이 불편합니다");
+//		dto.setSpec3("운동하는게 버겁습니다");
+//		dto.setTel("01012341234");
+//		dto.setTelCare("01023411345");
+//		dto.setAddress("인천특별시");
+//		dto.setLon(val1);
+//		dto.setLati(val2);
+//		dto.setBirth("19301029");
+//		dto.setGender(val3);
+//		
+//		senior = dto.seniorForEntity(dto);
+//		senior.setRegdate(val345);
+//		srepo.save(senior);
+//	}
+	
+//	@Test
+//	public void saveSearch() {
+//		
+//		
+//		String now = "2009-03-20 10:20:30.0";
+//		Timestamp val33 = Timestamp.valueOf(now);
+//		
+//		SearchedDTO dto = new SearchedDTO();
+//		Searched searched = new Searched();
+//		Senior senior = new Senior();
+//		
+//		BigDecimal val1 = BigDecimal.valueOf(12.12);
+//		BigDecimal val2 = BigDecimal.valueOf(12.12);
+//	
+//		senior.setSid("123");
+//		senior.setPwd("12345");
+//		senior.setName("김미영");
+//		senior.setSpec1("등이 아파요");
+//		senior.setSpec2("거동이 불편합니다");
+//		senior.setSpec3("운동하는게 버겁습니다");
+//		senior.setTel("01012341234");
+//		senior.setTelCare("01023411345");
+//		senior.setAddress("인천특별시");
+//		senior.setLon(val1);
+//		senior.setLati(val2);
+//		senior.setBirth("19301029");
+//		senior.setGender(1);
+//		senior.setRegdate(val33);
+//		
+//		senior = srepo.findById(1l).get();
+//		searched.setSenior(senior);
+//		
+//		dto.setSearchedadr("동탄역 네네치킨");
+//		dto.setLati("1234.21");
+//		dto.setLon("2345.22");
+//		
+//		searched = searched.dtoToSearch(dto);
+//		searched.setRegdate(val33);
+//		searched.setSenior(senior);
+//		searchRepo.save(searched);
+//		
+//		
+//	}
+		
+	
+//	@Test
+//	public void randomS( ) throws Exception {
+//		
+//		AdminRequestDTO dto = new AdminRequestDTO();
+//		dto.setCid("ksn");
+//		dto.setCpwd("1234");
+//		dto.setSid("");
+//		dto.setSpwd("1234");
+//		
+//		adminService.doingLogin(dto);
+//		
+//		int senior = srepo.findBySid(dto.getSid(), dto.getSpwd());
+//		System.out.println(senior);
+//			
+//	}
+//	
+//	}
+
