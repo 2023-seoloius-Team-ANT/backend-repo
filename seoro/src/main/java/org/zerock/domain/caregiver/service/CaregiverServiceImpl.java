@@ -112,7 +112,7 @@ public class CaregiverServiceImpl implements CaregiverService{
 		if(queno == 1) { // 자기소개
 			dto.setAnswer(caregiver.getInfo());
 		} else if(queno == 2) { // 방문 일정
-			dto.setAnswer(caregiver.getWorkTime());
+			dto.setAnswer(caregiver.getService());
 		} else if (queno == 3) { // 경험
 			dto.setAnswer(caregiver.getExp());
 		} else if (queno == 4) { // 자격증
