@@ -111,6 +111,12 @@ public class Caregiver {
 				.char3(cg.getChar3())
 				.worktime(cg.getWorkTime())
 				.workday(cg.getWorkday())
+				.info(cg.getInfo())
+				.service(cg.getService())
+				.exp(cg.getExp())
+				.certifi(cg.getCertifi())
+				.good(cg.getGood())
+				.goal(cg.getGoal())
 				.build();
 				
 	}
