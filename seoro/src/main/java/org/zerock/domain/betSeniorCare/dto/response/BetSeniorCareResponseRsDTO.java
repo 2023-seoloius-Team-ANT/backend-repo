@@ -19,4 +19,6 @@ public class BetSeniorCareResponseRsDTO { // 모든 신청 현황을 불러오�
 	private String name;
 	private int age;
 	private String gender;
+	private int year;
+	private int month;
 }
