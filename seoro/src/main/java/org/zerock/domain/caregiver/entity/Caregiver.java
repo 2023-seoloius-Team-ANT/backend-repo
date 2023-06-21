@@ -19,6 +19,7 @@ import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
+import org.zerock.domain.complain.entity.Complain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +42,9 @@ public class Caregiver {
 	
 	@OneToMany(mappedBy = "caregiver")
 	List<BetSeniorCare> betCaregivers = new ArrayList<BetSeniorCare>();
+	
+	@OneToMany(mappedBy = "caregiver")
+	List<Complain> complain = new ArrayList<Complain>();
 	
 	@Column(nullable = false)
 	private String name;
