@@ -15,12 +15,15 @@ import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.ComplainCaregiverCntDTO;
+import org.zerock.domain.admin.dto.response.SeniorStaticResponseDTO;
 import org.zerock.domain.admin.dto.response.YearMonth;
 import org.zerock.domain.admin.dto.response.YearMonthDTO;
 import org.zerock.domain.admin.entity.Sadmin;
 import org.zerock.domain.admin.repository.AdminRepo;
 import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.domain.caregiver.repository.CaregiverRepo;
+import org.zerock.domain.complain.repository.ComplainRepository;
 import org.zerock.domain.senior.entity.Senior;
 import org.zerock.domain.senior.repository.SeniorRepo;
 
@@ -40,6 +43,9 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private AdminRepo adminRepo;
 	
+	@Autowired
+	private ComplainRepository complainRepo;
+	
 	@Override //회원가입 전 요양사 리스트 불러오기 성공
 	public List<AdminResponseDTO> getCaregiver() throws Exception {
 		List<Caregiver> caregivers = caregiverRepo.getWaitCare(); // 승인대기중인 요양사를 db에서 출력하기
@@ -50,8 +56,26 @@ public class AdminServiceImpl implements AdminService {
 			dtoList.add(dto);
 		}
 		return dtoList;
+	}
+	
+	@Override
+	public ComplainCaregiverCntDTO findCompCareCnt() throws Exception {
+		
+		int complainCnt = complainRepo.getWaitComplainCnt();
+		int caregiverCnt = caregiverRepo.getWaitCaregiverCnt();
+		List<ComplainCaregiverCntDTO> dtoList = new ArrayList<>();
+		ComplainCaregiverCntDTO dto = new ComplainCaregiverCntDTO();
+		System.out.println(complainCnt + "/" + caregiverCnt);
+		dto.setComplainCnt(complainCnt);
+		dto.setCaregiverCnt(caregiverCnt);
+		dtoList.add(dto);
+		System.out.println("thisisdtolist" + dtoList);
+
+		return dto;
 		
 	}
+	
+
 	
 	@Override //요양사 승인 API
 	public void acceptCare(Long careno) throws Exception {
@@ -153,5 +177,62 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println(val);
 		
 		return val;
+	}
+	
+	public SeniorStaticResponseDTO getStaticSenior(int year) throws Exception {
+		//List<YearMonthDTO> caregiverStatic = caregiverRepo.findStaticSenior(year);
+		List<YearMonth> seniorStatic= seniorRepo.findStaticSenior(year);
+		
+		// 이번달 확인
+		LocalDate now = LocalDate.now();
+		int thismonth = now.getMonthValue();
+		System.out.println(thismonth);
+		SeniorStaticResponseDTO val = new SeniorStaticResponseDTO();
+		
+		seniorStatic.stream().forEach(ele -> {
+			System.out.println(ele.getDateMonth());
+			if("01".equals(ele.getDateMonth())) {
+				val.setOne(ele.getCnt());
+			}else if("02".equals(ele.getDateMonth())) {
+				val.setTwo(ele.getCnt());
+			}else if("03".equals(ele.getDateMonth())) {
+				val.setThree(ele.getCnt());
+			}else if("04".equals(ele.getDateMonth())) {
+				val.setFour(ele.getCnt());
+			}else if("05".equals(ele.getDateMonth())) {
+				val.setFive(ele.getCnt());
+			}else if("06".equals(ele.getDateMonth())) {
+				System.out.println("6월!");
+				val.setSix(ele.getCnt());
+			}else if("07".equals(ele.getDateMonth())) {
+				val.setSeven(ele.getCnt());
+			}else if("08".equals(ele.getDateMonth())) {
+				val.setEight(ele.getCnt());
+			}else if("09".equals(ele.getDateMonth())) {
+				val.setNine(ele.getCnt());
+			}else if("10".equals(ele.getDateMonth())) {
+				val.setTen(ele.getCnt());
+			}else if("11".equals(ele.getDateMonth())) {
+				val.setEleven(ele.getCnt());
+			}else if("12".equals(ele.getDateMonth())) {
+				val.setTwelve(ele.getCnt());
+			}
+			 // 이번달과 일치하는 값이 있으면
+			if(Integer.parseInt(ele.getDateMonth()) == thismonth){
+				val.setThismonth(ele.getCnt());				
+			}
+		});
+
+		System.out.println(seniorStatic);
+		int whole = seniorRepo.findSeniorWhole();
+		System.out.println("전체는?" +whole);
+		val.setSeniorAll(whole);
+		System.out.println(val);
+		
+		return val;
+		
+		
+		
+		
 	}
 }

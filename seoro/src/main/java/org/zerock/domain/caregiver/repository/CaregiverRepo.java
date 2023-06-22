@@ -46,6 +46,9 @@ public interface CaregiverRepo extends CrudRepository<Caregiver, Long> {
 	
 	@Query(value="select count(*) whole from seoro.caregiver", nativeQuery = true)
 	public int findSeniorWhole();
+
+	@Query(value="SELECT COUNT(*) FROM seoro.caregiver WHERE reg_check=0", nativeQuery = true)
+	public Integer getWaitCaregiverCnt();
 	
 }
 
