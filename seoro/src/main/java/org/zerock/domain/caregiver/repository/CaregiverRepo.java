@@ -1,6 +1,8 @@
 package org.zerock.domain.caregiver.repository;
 
 import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.zerock.domain.admin.dto.response.YearMonth;
+import org.zerock.domain.admin.dto.response.YearMonthDTO;
 import org.zerock.domain.caregiver.entity.Caregiver;
 
 @Repository
@@ -34,6 +38,14 @@ public interface CaregiverRepo extends CrudRepository<Caregiver, Long> {
 	@Query(value = "SELECT * FROM seoro.caregiver c WHERE c.cid = ?1 and c.pwd = ?2", nativeQuery = true)
 	public Caregiver findByCaregiver(String cid, String pwd);
 	
+//	@Query(value ="SELECT date_format(regdate, '%m') dateMonth, count(*) cnt from seoro.caregiver where date_format(regdate, '%Y') = :year group by dateMonth order by date_format(regdate, '%m') asc;", nativeQuery = true)
+//	public List<YearMonthDTO> findStaticSenior(@Param("year") int year);
+	
+	@Query(value ="SELECT date_format(regdate, '%m') dateMonth, count(*) cnt from seoro.caregiver where date_format(regdate, '%Y') = :year group by dateMonth order by date_format(regdate, '%m') asc;", nativeQuery = true)
+	public List<YearMonth> findStaticSenior(@Param("year") int year);
+	
+	@Query(value="select count(*) whole from seoro.caregiver", nativeQuery = true)
+	public int findSeniorWhole();
 	
 }
 
