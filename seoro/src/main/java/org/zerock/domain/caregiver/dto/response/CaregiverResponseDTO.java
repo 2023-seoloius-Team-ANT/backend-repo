@@ -23,5 +23,10 @@ public class CaregiverResponseDTO {
 	private String service;
 	private int age;
 	private String profile; // 버킷 생성하고 추가
+	private String info;
+	private String exp;
+	private String certifi;
+	private String good;
+	private String goal;
 	
 }

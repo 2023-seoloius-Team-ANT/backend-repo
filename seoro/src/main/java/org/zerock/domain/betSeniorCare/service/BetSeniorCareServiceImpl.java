@@ -96,6 +96,8 @@ public class BetSeniorCareServiceImpl implements BetSeniorCareService{
 			 innerbet.setConno(betSeniorCare.getConno()); // bet어쩌고의 pk
 			 innerbet.setName(seniors.getName());
 			 innerbet.setSeniorno(betSeniorCare.getSenior().getSeniorno());
+			 innerbet.setYear(betSeniorCare.getYear());
+			 innerbet.setMonth(betSeniorCare.getMonth());
 			 
 			 // 성별
 			 if(seniors.getGender() == 0) { // 남성
