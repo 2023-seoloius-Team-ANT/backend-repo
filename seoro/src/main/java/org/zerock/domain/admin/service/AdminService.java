@@ -7,6 +7,7 @@ import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.MatchingStaticMonthResponseDTO;
 import org.zerock.domain.admin.dto.response.WorkStaticResponseDTO;
 
 
@@ -24,4 +25,6 @@ public interface AdminService {
 	public CaregiverStaticResponseDTO getStaticCaregiver(int year) throws Exception;
 	
 	public List<WorkStaticResponseDTO> getadminWork(int year) throws Exception;
+	
+	public MatchingStaticMonthResponseDTO getMatchingStatic() throws Exception;
 }

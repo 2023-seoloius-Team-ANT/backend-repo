@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.zerock.domain.admin.dto.response.StateCheck;
 import org.zerock.domain.admin.dto.response.WorkStatic;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 
@@ -24,4 +25,7 @@ public interface BetRepo extends CrudRepository<BetSeniorCare, Long>{
 	
 	@Query(value = "select date_format(regdate, '%Y-%m-%d') AS date, seniorno, careno, stateck, reason from seoro.betseniorcare where date_format(regdate, '%Y') = (:year) and (stateck = 1 or stateck = 2) order by date desc;", nativeQuery = true)
 	public List<WorkStatic> findAdminWork(@Param("year") int year);
+	
+	@Query(value="select stateck, count(*) cnt from seoro.betseniorcare where date_format(regdate, '%Y-%m') = date_format(CURDATE(), '%Y-%m') group by stateck", nativeQuery = true)
+	public List<StateCheck> getmatchingStatic();
 }

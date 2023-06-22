@@ -15,6 +15,8 @@ import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.MatchingStaticMonthResponseDTO;
+import org.zerock.domain.admin.dto.response.StateCheck;
 import org.zerock.domain.admin.dto.response.WorkStatic;
 import org.zerock.domain.admin.dto.response.WorkStaticResponseDTO;
 import org.zerock.domain.admin.dto.response.YearMonth;
@@ -45,6 +47,8 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private BetRepo betRepo;
+	
+	int sum = 0;
 	
 	@Override //회원가입 전 요양사 리스트 불러오기 성공
 	public List<AdminResponseDTO> getCaregiver() throws Exception {
@@ -178,5 +182,24 @@ public class AdminServiceImpl implements AdminService {
 		});
 		
 		return result;
+	}
+
+	@Override
+	public MatchingStaticMonthResponseDTO getMatchingStatic() throws Exception {
+		List<StateCheck> scheck = betRepo.getmatchingStatic();
+		MatchingStaticMonthResponseDTO dto = new MatchingStaticMonthResponseDTO();
+
+		scheck.stream().forEach(ele -> {
+			if(ele.getStateck() == 1) { // 수락 
+				dto.setConenctSuccess(ele.getCnt());
+				sum += ele.getCnt();
+			}else if(ele.getStateck() == 2) { // 거절 
+				dto.setConnectFail(ele.getCnt());
+				sum += ele.getCnt();
+			}
+		});
+		dto.setConnectAll(sum);
+		
+		return dto;
 	}
 }
