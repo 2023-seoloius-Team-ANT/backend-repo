@@ -12,6 +12,8 @@ import org.zerock.domain.admin.Login.RejectedException;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
+import org.zerock.domain.admin.entity.Sadmin;
+import org.zerock.domain.admin.repository.AdminRepo;
 import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.domain.caregiver.repository.CaregiverRepo;
 import org.zerock.domain.senior.entity.Senior;
@@ -29,6 +31,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private SeniorRepo seniorRepo;
+	
+	@Autowired
+	private AdminRepo adminRepo;
 	
 	@Override //회원가입 전 요양사 리스트 불러오기 성공
 	public List<AdminResponseDTO> getCaregiver() throws Exception {
@@ -57,14 +62,20 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public AdminResponseBothDTO doingLogin(AdminRequestDTO dto) throws Exception {	//로그인(공통)
+		int adminCount = adminRepo.findByAid(dto.getId(), dto.getPwd());
 		int seniorCount = seniorRepo.findBySid(dto.getId(), dto.getPwd());	
 		int caregiverCount = caregiverRepo.findByCid(dto.getId(), dto.getPwd());
 		
 		Caregiver cReg = caregiverRepo.findByCaregiver(dto.getId(), dto.getPwd());
 		
-		if(seniorCount == 0 && caregiverCount == 0) {
+		if(seniorCount == 0 && caregiverCount == 0 && adminCount == 0) {
 			throw new LoginFailedException("아이디 혹은 비밀번호가 잘못되었습니다."); //로그인 실패시 강제예외 발생
 			
+		} else if (adminCount == 1) { //관리자가 로그인했을때
+			Sadmin sadmin = adminRepo.findByAdmin(dto.getId(), dto.getPwd());
+			AdminResponseBothDTO responseBoth = sadmin.toAdminResponse(sadmin);
+			return responseBoth;
+
 		} else if(seniorCount == 1) { //노인이 로그인 성공했을때
 			log.info("노인 로그인 성공");
 			Senior senior = seniorRepo.findBySenior(dto.getId(), dto.getPwd());
