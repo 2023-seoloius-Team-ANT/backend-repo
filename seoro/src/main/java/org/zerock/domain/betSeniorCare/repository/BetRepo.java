@@ -22,6 +22,6 @@ public interface BetRepo extends CrudRepository<BetSeniorCare, Long>{
 	@Query(value="SELECT * from BetSeniorCare where stateck = 0 AND year = (:year) AND month =(:month) AND careno=(:careno) AND seniorno=(:seniorno)" , nativeQuery = true)
 	public Optional<BetSeniorCare> duplicateCk(@Param("year") int year, @Param("month") int month, @Param("careno") long careno, @Param("seniorno") long seniorno);
 	
-	@Query(value = "select date_format(regdate, '%Y-%m-%d') AS date, seniorno, careno, stateck from seoro.betseniorcare where date_format(regdate, '%Y') = (:year) and (stateck = 1 or stateck = 2) order by date desc;", nativeQuery = true)
+	@Query(value = "select date_format(regdate, '%Y-%m-%d') AS date, seniorno, careno, stateck, reason from seoro.betseniorcare where date_format(regdate, '%Y') = (:year) and (stateck = 1 or stateck = 2) order by date desc;", nativeQuery = true)
 	public List<WorkStatic> findAdminWork(@Param("year") int year);
 }

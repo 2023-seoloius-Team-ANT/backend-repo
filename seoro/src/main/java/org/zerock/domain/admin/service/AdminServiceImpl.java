@@ -15,10 +15,13 @@ import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.WorkStatic;
+import org.zerock.domain.admin.dto.response.WorkStaticResponseDTO;
 import org.zerock.domain.admin.dto.response.YearMonth;
 import org.zerock.domain.admin.dto.response.YearMonthDTO;
 import org.zerock.domain.admin.entity.Sadmin;
 import org.zerock.domain.admin.repository.AdminRepo;
+import org.zerock.domain.betSeniorCare.repository.BetRepo;
 import org.zerock.domain.caregiver.entity.Caregiver;
 import org.zerock.domain.caregiver.repository.CaregiverRepo;
 import org.zerock.domain.senior.entity.Senior;
@@ -39,6 +42,9 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Autowired
 	private AdminRepo adminRepo;
+	
+	@Autowired
+	private BetRepo betRepo;
 	
 	@Override //회원가입 전 요양사 리스트 불러오기 성공
 	public List<AdminResponseDTO> getCaregiver() throws Exception {
@@ -109,11 +115,9 @@ public class AdminServiceImpl implements AdminService {
 		// 이번달 확인
 		LocalDate now = LocalDate.now();
 		int thismonth = now.getMonthValue();
-		System.out.println(thismonth);
 		CaregiverStaticResponseDTO val = new CaregiverStaticResponseDTO();
 		
 		caregiverStatic.stream().forEach(ele -> {
-			System.out.println(ele.getDateMonth());
 			if("01".equals(ele.getDateMonth())) {
 				val.setOne(ele.getCnt());
 			}else if("02".equals(ele.getDateMonth())) {
@@ -125,7 +129,6 @@ public class AdminServiceImpl implements AdminService {
 			}else if("05".equals(ele.getDateMonth())) {
 				val.setFive(ele.getCnt());
 			}else if("06".equals(ele.getDateMonth())) {
-				System.out.println("6월!");
 				val.setSix(ele.getCnt());
 			}else if("07".equals(ele.getDateMonth())) {
 				val.setSeven(ele.getCnt());
@@ -146,12 +149,34 @@ public class AdminServiceImpl implements AdminService {
 			}
 		});
 
-		System.out.println(caregiverStatic);
 		int whole = caregiverRepo.findSeniorWhole();
-		System.out.println("전체는?" +whole);
 		val.setSeniorAll(whole);
-		System.out.println(val);
 		
 		return val;
+	}
+
+	@Override
+	public List<WorkStaticResponseDTO> getadminWork(int year) throws Exception {
+		List<WorkStatic> findAdminWork = betRepo.findAdminWork(year);
+		List<WorkStaticResponseDTO> result = new ArrayList<>();
+		
+		findAdminWork.stream().forEach(ele -> {	
+			String caregiverId= caregiverRepo.findByCareno(ele.getCareno()).getCid();
+			String seniorId = seniorRepo.findBySeniorno(ele.getSeniorno()).getSid();	
+			WorkStaticResponseDTO dto = new WorkStaticResponseDTO();
+			dto.setCaregiverId(caregiverId);
+			dto.setSeniorId(seniorId);
+			dto.setDate(ele.getDate());
+			if(ele.getStateck() == 1) {
+				dto.setChoose("승인");
+			}else if(ele.getStateck() == 2) {
+				dto.setChoose("거절");
+				
+			}
+			dto.setReason(ele.getReason());
+			result.add(dto);
+		});
+		
+		return result;
 	}
 }
