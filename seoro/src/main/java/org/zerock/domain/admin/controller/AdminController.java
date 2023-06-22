@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
+import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
 import org.zerock.domain.admin.service.AdminService;
 import org.zerock.global.ResponseFormat;
 import org.zerock.global.ResponseStatus;
@@ -59,5 +60,11 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
-	
+	@GetMapping("/admin/caregiver/{year}")
+	public ResponseEntity<ResponseFormat<CaregiverStaticResponseDTO>> getStaticCaregiver(@PathVariable int year) throws Exception{
+		CaregiverStaticResponseDTO caregiverResponse = adminService.getStaticCaregiver(year);
+		ResponseFormat<CaregiverStaticResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.STATISTIC_CAREGIVER_SUCCESS, caregiverResponse);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
+	}
+
 }

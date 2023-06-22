@@ -39,7 +39,10 @@ public enum ResponseStatus {
 	//신고 관련 응답 status
 	COMPLAIN_POST_SUCCESS("COM000", "컴플레인 생성 성공"),
 	COMPLAIN_GETALL_SUCCESS("COM001", "모든 컴플레인 리스트 가져오기 성공"),
-	COMPLAIN_COMPLETE_SUCCESS("COM002", "컴플레인 확인 완료");
+	COMPLAIN_COMPLETE_SUCCESS("COM002", "컴플레인 확인 완료"),
+	
+	// 통계 관련 응답 status
+	STATISTIC_CAREGIVER_SUCCESS("STA000", "요양사 통계 가져오기 성공");
 	
 	
 	private final String code;
