@@ -11,6 +11,9 @@ import org.zerock.domain.complain.entity.Complain;
 public interface ComplainRepository extends CrudRepository<Complain, Long>{
 	@Query(value="SELECT * FROM seoro.complain WHERE stateck=0 order by regdate desc", nativeQuery = true)
 	public List<Complain> getWaitComplainList();
+	
+	@Query(value="SELECT COUNT(*) FROM seoro.complain WHERE stateck=0", nativeQuery = true)
+	public Integer getWaitComplainCnt();
 
 	
 }
