@@ -46,7 +46,13 @@ public enum ResponseStatus {
 	STATISTIC_CAREGIVER_SUCCESS("STA000", "요양사 통계 가져오기 성공"),
 	STATISTIC_SENIOR_SUCCESS("ADM003", "년도 월별 신규 노인 회원 가져오가 성공");
 	
-	
+	// 관리자 관련 응답 status
+	STATISTIC_CAREGIVER_SUCCESS("STA000", "요양사 통계 가져오기 성공"),
+	ADMIN_STATISTICS_NEWSENIOR_SUCCESS("ADM003" , "년도 월별 신규 노인 회원 가져오기 성공"),
+	ADMIN_STATISTICS_NEWCAREGIVER_SUCCESS("ADM004", "년도 월별 신규 요양사 회원 가져오기 성공"),
+	ADMIN_STATISTICS_MATCHING_YN_SUCCESS("ADM005", "년도 월 별 매칭 통계 가져오기 성공"),
+	ADMIN_STATISTICS_WORK_SUCCESS("ADM006", "관리자 잔여 업무 갯수 가져오기 성공"),
+	ADMIN_STATISTICS_MATCHING_CNT_SUCCESS("ADM007", "당월 매칭 통계(총 갯수) 가져오기 성공");
 	
 	
 	

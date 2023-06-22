@@ -68,11 +68,12 @@ public class BetSeniorCareServiceImpl implements BetSeniorCareService{
 
 
 	@Override
-	public void declineConnect(long conno) throws Exception {
+	public void declineConnect(long conno, String reason) throws Exception {
 		Optional<BetSeniorCare> updateDecline = betRepo.findById(conno);
 		
 		updateDecline.ifPresent(acc -> {
 			acc.setStateck(2); // 거절으로 변경
+			acc.setReason(reason); // 거절 시 사유 저장
 			betRepo.save(acc);
 		});
 				

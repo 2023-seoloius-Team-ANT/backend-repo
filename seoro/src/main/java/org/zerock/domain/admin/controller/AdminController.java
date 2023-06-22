@@ -18,6 +18,8 @@ import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
 import org.zerock.domain.admin.dto.response.ComplainCaregiverCntDTO;
 import org.zerock.domain.admin.dto.response.SeniorStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.MatchingStaticMonthResponseDTO;
+import org.zerock.domain.admin.dto.response.WorkStaticResponseDTO;
 import org.zerock.domain.admin.service.AdminService;
 import org.zerock.global.ResponseFormat;
 import org.zerock.global.ResponseStatus;
@@ -72,10 +74,10 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
-	@GetMapping("/admin/caregiver/{year}")
+	@GetMapping("/admin/caregiver/{year}") // 년도 월별 신규 요양사 회원 가져오는 API  
 	public ResponseEntity<ResponseFormat<CaregiverStaticResponseDTO>> getStaticCaregiver(@PathVariable int year) throws Exception{
 		CaregiverStaticResponseDTO caregiverResponse = adminService.getStaticCaregiver(year);
-		ResponseFormat<CaregiverStaticResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.STATISTIC_CAREGIVER_SUCCESS, caregiverResponse);
+		ResponseFormat<CaregiverStaticResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.ADMIN_STATISTICS_NEWCAREGIVER_SUCCESS, caregiverResponse);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
@@ -86,5 +88,20 @@ public class AdminController {
 		ResponseFormat<SeniorStaticResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.STATISTIC_SENIOR_SUCCESS, seniorResponse);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
+  
+	@GetMapping("/admin/connect/{year}")
+	public ResponseEntity<ResponseFormat<List<WorkStaticResponseDTO>>> getadminWork(@PathVariable int year) throws Exception{
+		List<WorkStaticResponseDTO> workResponse = adminService.getadminWork(year);
+		ResponseFormat<List<WorkStaticResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.ADMIN_STATISTICS_WORK_SUCCESS, workResponse);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+	@GetMapping("/admin/connect")
+	public ResponseEntity<ResponseFormat<MatchingStaticMonthResponseDTO>> getMatchingStatic() throws Exception{
+		MatchingStaticMonthResponseDTO matchingResponse = adminService.getMatchingStatic();
+		ResponseFormat<MatchingStaticMonthResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.ADMIN_STATISTICS_MATCHING_CNT_SUCCESS, matchingResponse);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
 
 }

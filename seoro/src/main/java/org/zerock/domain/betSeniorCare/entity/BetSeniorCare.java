@@ -59,4 +59,7 @@ public class BetSeniorCare {
 	@Column(nullable = false) 
 	private int stateck; // 0은 기본 상태, 1은 승인 상태, 2는 거절 상태를 의미합니다.
 	
+	@Column
+	private String reason; // 사유
+	
 }
