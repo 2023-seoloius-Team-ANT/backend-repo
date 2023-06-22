@@ -34,7 +34,12 @@ public enum ResponseStatus {
 	CONNECT_RESEVLIST_SUCCESS("CO001", "요양사 -> 예약 현황 불러오기 성공"),
 	CONNECT_CONFIRMLIST_SUCCESS("CO002", "요양사 -> 예약 확정된 노인 리스트 불러오기 성공"),
 	CONNECT_ACCEPT_SUCCESS("CO003", "요양사 -> 예약 수락 성공"),
-	CONNECT_DECLINE_SUCCESS("CO004", "요양사 -> 예약 거절 성공");
+	CONNECT_DECLINE_SUCCESS("CO004", "요양사 -> 예약 거절 성공"),
+	
+	//신고 관련 응답 status
+	COMPLAIN_POST_SUCCESS("COM000", "컴플레인 생성 성공"),
+	COMPLAIN_GETALL_SUCCESS("COM001", "모든 컴플레인 리스트 가져오기 성공"),
+	COMPLAIN_COMPLETE_SUCCESS("COM002", "컴플레인 확인 완료");
 	
 	
 	private final String code;
