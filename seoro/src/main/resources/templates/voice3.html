@@ -1,0 +1,1522 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.ofg">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Detection</title>
+  		<script	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=hAeh0XQZwO5CeTusAbw0h8wz6PZeKF3d9ZFlvO18"></script>
+		
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500&display=swap" rel="stylesheet">
+  
+    <style>
+        /* Base HTML tag */
+        body {
+        	margin : 0;
+        }
+        html {
+            font-size: 24px;
+        }
+        * {
+		  font-family: 'Noto Sans KR', sans-serif;
+		}
+		    
+        /* Main container */
+        .scwrap {
+            width: 98vw;
+            height: 100vh;
+
+        }
+    
+        /* Header */
+        .scheader {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 3%;
+            height : 105px;
+        }
+    
+        .scheader > * {
+            flex: 1;
+        }
+    
+        /* Logo Box */
+        .sclogobox {
+            display: flex;
+            padding: 2.7% 0 0 0;
+            font-size: 3rem;
+
+            font-weight: 800;
+            color: #350419;
+        }
+    
+ 
+    
+
+    
+/*         .sclogo { */
+/*             font-size: 48px; */
+        }
+    
+        /* Menu Box */
+        .scmenu {
+            display: flex;
+            list-style: none;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+    
+        .scmenu > * {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-size: 24px;
+            padding: 2% 0;
+        }
+    
+        /* Menu Icon */
+        .menuicon {
+            display: none;
+        }
+    
+        /* Content */
+        .sccontent {
+        
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin-top: 5%;
+ 
+            align-content: flex-start;
+            width : 100vw;
+            height: 90vh;
+            overflow: hidden;
+            border-radius: 100px;
+        }
+    
+        .scleftcontent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #FFFFFF;
+            border-radius: 40px;
+            width: 100%;
+            margin : 1%;
+            padding-top: 8%;
+            height: 80vh;
+        }
+        .scrightcontent {
+        	width:100%;
+        	height: 488px;
+        	background-color: #FFFFFF;
+        	border-radius: 30px;
+        	margin: 3%;
+        	padding: 5%;
+        	position: relative;
+        
+        }
+        
+        .scrightcontent > .findbox {
+         	border: 3px solid #c407345c;;
+         	padding: 0 2%;
+         
+        
+       
+        
+        }
+        .findinputbox {
+        	width:100%;
+        	height:100%;
+        	border: 2px solid #f6b6cd;
+    		font-size: 2rem;
+  		    padding-left: 5%;
+  		 
+         }
+         .rstinputbox {
+        	width:100%;
+        	height:100%;
+        	border: 2px solid #f6b6cd;
+    		font-size: 2rem;
+  		    padding-left: 5%;
+         }
+        
+    
+        /* Button Answers */
+        .botans {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            animation: fadein 1.5s;
+            
+            
+        }
+    
+        .botansbox {
+            width: 110%;
+        }
+    
+        .botansboxtext {
+                width: 80%;
+			    position: absolute;
+			    left: 10%;
+			    top: 10%;
+			    padding-top: 5%;
+			    /* overflow: hidden; */
+			    font-size: 2rem;
+			  
+          
+/*             overflow: hidden; */
+        }
+        .botbox {
+        position: absolute;
+        bottom: 0;
+        z-index: 50;
+        
+ 
+        }
+    
+        /* Bot Image */
+       	.bot {
+       		width : 100%;
+       		display:flex;
+       		justify-content: flex-end;
+       		
+      
+       
+       	
+       	}
+        .botimg {
+     		
+    		width: 30%;
+    		animation: fadein 1.5s;
+    		
+      
+        }
+         .findbox {
+            	height:111px;
+            margin:3% 0;
+            
+            }
+         .findicon{
+         	display: flex;
+         	align-items: center;
+         }
+         .findicon > span {
+        	 font-size: 2rem;
+        	 margin-left: 3%;
+        	 font-weight: 800;
+        	 color: #350419;
+        	}
+    
+        /* Media queries */
+    
+        /* From 430px and above */
+        @media screen and (min-width: 360px) {
+            .scheader {
+                flex-wrap: nowrap;
+                height : 150px;
+            }
+            .sclogobox {
+                width: 100%;
+            }
+            .sccontent {
+                flex-direction: row;
+            }
+            .scmenu > * {
+                width: 130px;
+                height: 20px;
+            }
+            .botimg {
+              
+            }
+        }
+   
+        
+        @keyframes fadein {
+		    from {
+		        opacity: 0;
+		    }
+		    to {
+		        opacity: 1;
+		    }
+		}
+        
+        	.blurwrap {
+				position: absolute;
+				background-color: rgba(0, 0, 0, 0.24);
+				width: 100vw;
+				height: 190vh;
+				display: flex;
+				justify-content: center;
+				padding-top: 35%;
+				top: 0;
+				left:0; 
+				display: none; 
+				    
+			}
+			.text_custom {
+				display: none;
+			}
+			#btn_select {
+				display: none;
+
+			}
+		
+			.rsttext {
+				display: flex;
+				justify-content: center;
+
+				align-items: center;
+				flex-direction: column;
+				margin-bottom: 5%;
+
+			}
+			.rsttext > * {
+				margin: 0;
+			}
+			#searchResult {
+				list-style: none;
+				padding-inline-start: 0;
+				margin: 0 auto;
+			}
+			.map {
+				display: flex;
+  				justify-content: center;
+				  height: 400px;
+   				 width: 90%;
+				 margin-bottom: 1%;
+			}
+			.result {
+				display: flex;
+				justify-content: center;
+				overflow: scroll;
+				margin-top: 5%;
+			}
+			.rst {
+				font-size: 32px;
+
+			}
+			#searchResult > li > div {
+				border: 10px solid #FF3C6B;
+				margin-bottom: 5%;
+				border-radius: 30px;
+				height: 142px;
+				display: flex;
+				align-items: center;
+				font-size: 32px;
+
+			}
+			.mapbox {
+				display: flex;
+				justify-content: center;
+			}
+			.divisionmap {
+				position: absolute;
+				top:0;
+				left:0;
+				width: 100%;
+				height:580px;
+				display: none;
+				
+			
+			}
+			.listening {
+			    position: fixed;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    background-color: #00000091;
+			    color: white;
+			    justify-content: center;
+			    align-items: center;
+			    flex-direction: column;
+			    font-size: 60px;
+			    display: none;
+			    font-weight: 800;
+			}
+
+				.loader,
+				.loader:before,
+				.loader:after {
+				  border-radius: 50%;
+				  width: 2.5em;
+				  height: 2.5em;
+				  -webkit-animation-fill-mode: both;
+				  animation-fill-mode: both;
+				  -webkit-animation: load7 1.8s infinite ease-in-out;
+				  animation: load7 1.8s infinite ease-in-out;
+				  
+				}
+				.loader {
+				  color: #ffffff;
+				  font-size: 10px;
+				  margin: 12px auto;
+				  position: relative;
+				  text-indent: -9999em;
+				  -webkit-transform: translateZ(0);
+				  -ms-transform: translateZ(0);
+				  transform: translateZ(0);
+				  -webkit-animation-delay: -0.16s;
+				  animation-delay: -0.16s;
+				  zoom: 3;
+				}
+				.loader:before,
+				.loader:after {
+				  content: '';
+				  position: absolute;
+				  top: 0;
+				}
+				.loader:before {
+				  left: -3.5em;
+				  -webkit-animation-delay: -0.32s;
+				  animation-delay: -0.32s;
+				}
+				.loader:after {
+				  left: 3.5em;
+				}
+				@-webkit-keyframes load7 {
+				  0%,
+				  80%,
+				  100% {
+				    box-shadow: 0 2.5em 0 -1.3em;
+				  }
+				  40% {
+				    box-shadow: 0 2.5em 0 0;
+				  }
+				}
+				@keyframes load7 {
+				  0%,
+				  80%,
+				  100% {
+				    box-shadow: 0 2.5em 0 -1.3em;
+				  }
+				  40% {
+				    box-shadow: 0 2.5em 0 0;
+				  }
+				}
+				
+				
+				
+				/* 0608 */
+				.map_wrap {
+					width : 100%;
+					height:100%;
+				
+				}
+				.homebtnbox {
+	
+				}
+				.homebtn {
+				width:90px;
+				height:90px;
+				
+				object-fit: cover;
+				}
+				.logoheart {
+				width:300px;
+				height:auto;
+				
+				object-fit: cover;
+				
+				}
+				.sclogobox > .box {
+					flex : 1; 
+				
+				
+				}
+				.sclogobox > .middlebox {
+				flex : 1.5;
+				
+				
+				}
+				.loginbtnbox {
+		
+					display: flex;
+				    justify-content: flex-end;
+				    align-items: flex-start;
+				}
+				.loginbtn {
+					width: 176px;
+				    height: 70px;
+				    object-fit: cover;
+								
+				}
+				.logoheart {
+					width:300px;
+					height:auto;
+					
+					object-fit: cover;
+				
+				
+				}
+				.logoheartbox  {
+					display: flex;
+					justify-content: center;
+				
+				}
+				.homebtnbox  {
+					display: flex;
+		
+					
+				}
+				.phyn {
+					position: absolute;
+				    width: 100vw;
+				    height: 100vh;
+				    background-color: #00000066;
+				    top: 0;
+				    
+				    left : 0;
+				        padding-top: 40%;
+				    visibility: hidden;
+			
+				}
+				.phyntexts {
+				    display: flex;
+				    justify-content: center;
+				    font-size: 2rem;
+				    color: white;
+				    flex-direction: column;
+				    align-items: center;
+				    font-size: 4rem;
+					padding-bottom: 5%;	
+				}
+				.ynbox {
+				
+					display:  flex;
+					justify-content: center;
+					    gap: 2%;
+					        margin-top: 10%;
+					    
+
+				}
+				.ynboxbtn {
+				    width: 40%;
+				    height: 130px;
+				    display: flex;
+				    align-items: center;
+				    justify-content: center;
+				    font-size: 3rem;
+				     color: white;
+				    border-radius: 25px;
+				}
+				.yesbtn {
+				background-color: #ED174F;
+				
+				}
+				.nobtn {
+				background-color: #120078;
+				
+				}    
+				.chs {
+					position: absolute;
+				    width: 100vw;
+				    height: 100vh;
+				    background-color: #00000066;
+				    top: 0;
+				    
+				    left : 0;
+				        padding-top: 35%;	
+				   	display : none;	
+				   	    justify-content: center;
+				   	        z-index: 90;
+				   	        
+				}    
+				.chsbox {
+				top : 20%;
+				width : 80%;
+				height : 65%;
+					display : flex;	
+					    flex-direction: column;
+					        align-items: center;
+				
+					background-color: white;
+					    gap: 2%;
+				}
+				.chscontbox {
+				    border: 11px solid #ED174F;
+				    width: 90%;
+				    display: flex;
+				    height: 11%;
+				    font-size: 1.8rem;
+				    align-items: center;
+				    justify-content: center;
+				    border-radius: 20px;
+								
+				
+				
+				}
+				.chstext {
+					flex-direction: column;
+				    font-size: 1.8rem;
+				
+				    /* margin: 0 auto; */
+				    display: flex;
+				    /* gap: 0%; */
+				    align-items: center;
+				    justify-content: center;
+							
+				}
+				.chstext > p {
+					height : 10%;
+				
+				}
+				.chsblue {
+				    border: 11px solid #424C7A;
+				
+				}
+				.trg {
+				    position: absolute;
+				    top: 0;
+				    padding-top: 30%;
+				    display: none;
+				    width: 100vw;
+				    justify-content: center;
+				}
+					
+				
+			
+				.trgflex{
+					display: flex;
+					gap:5%;
+				
+				}
+				.screenshot {
+				    width: 300px;
+				    height: 130px;
+				    display: flex;
+				    align-items: center;
+				    justify-content: center;
+				    font-size: 3rem;
+				    color: white;
+				    border-radius: 25px;
+				        background-color: #ED174F;
+				}
+
+				.tel {
+				width: 300px;
+			    height: 130px;
+			    display: flex;
+			    align-items: center;
+			    justify-content: center;
+			    font-size: 3rem;
+			    color: white;
+			    border-radius: 25px;
+			        background-color: #120078;
+							
+				}
+				.atagtemp {
+					text-decoration-line: none;
+					color: white;
+				
+				
+				}
+			
+        
+    </style>
+</head>
+<body>
+	   <div class="scwrap">
+	   
+	   
+        <div class="scheader">
+            <div class="sclogobox">
+	            <div class= "homebtnbox box" >
+	            	<img class= "homebtn" th:src="@{/img/homeicon.png}">
+	            </div>
+	            <div class="logoheartbox middlebox">
+	            	<img class= "logoheart" th:src="@{/img/logo.png}">
+	            
+	            </div>
+	            <div class="loginbtnbox box">
+	            	<img class= "loginbtn" th:src="@{/img/loginbtn.png}">
+	            </div>
+            </div>
+
+        </div>
+        <div class="sccontent">
+	           <div class = "mapwrap">
+
+					<div id="map_wrap" class="map_wrap">
+						<div id="map_div"></div>
+					</div>
+					<div class="map_act_btn_wrap clear_box"></div>
+				</div>
+				
+	         	<div class="botbox" id="botbox" onclick="trig()">
+	         		<div class="botans">
+	                    <img class="botansbox" th:src="@{/img//Rectangle48.png}">
+	                    <div class="botansboxtext"> 
+	                    
+	                    </div>
+	                </div>
+	                
+	                <div class="bot">
+	                    <img class="botimg" th:src="@{/img/bot2.png}">
+	                </div>
+	         	</div>
+        </div>
+        <div class="phyn" id = "phyn">
+        	<div class = "phyntexts"> 
+        		<div>지금 듣고 있습니다.</div>
+        		<div>계속 말씀해 주세요.</div>
+        		<div class="loader">Loading...</div>
+        	</div>
+        	<div class="ynbox" id="ynbox">
+        		<div class = "yesbtn ynboxbtn" onclick="phTwo()">네</div>
+        		<div class = "nobtn ynboxbtn" onclick="phOneNone()">아니오</div>
+        	</div>
+
+	    </div>
+	    <div class = "chs" id= "chs" >
+	    	<div class = "chsbox" id = "chsbox">
+	    		<div class = "chstext">
+	    			<p>고객님 인근 시설은 다음과 같습니다.</p>
+	    			<p>찾으시는 시설을 선택해주세요.</p>
+	    		</div>
+	    		<div class="chs1 chscontbox chsred" onclick="phThree('요양원;')">요양원</div>
+	    		<div class="chs2 chscontbox chsblue" onclick="phThree('병원;')">병원</div>
+	    		<div class="chs3 chscontbox chsred" onclick="phThree('약국;')">약국</div>
+	    		<div class="chs4 chscontbox chsblue" onclick="phThree('은행;')">은행</div>
+	    		<div class="chs5 chscontbox chsred" onclick="phOneNone()">찾는 곳이 없음</div>
+	    	
+	    	
+	    	</div>
+	    </div>
+	    <div class="trg" id="trg">
+	    	<div class="trgflex">
+	    		<div class = "screenshot" onclick="screenshot()">약도저장</div>
+        		
+        			<div class = "tel" onclick="tel()"><a class = "atagtemp" href='tel:031-674-5566'>전화하기</a></div>
+        	
+	    	</div>
+	    </div>
+	    <script type="text/javascript">
+	    //전역변수 
+	 	    var map, marker1;
+	 		var marker_s, marker_e, marker_p1, marker_p2;
+			var totalMarkerArr = [];
+			var drawInfoArr = [];
+			var resultdrawArr = [];
+			var markerArr = [], labelArr = [];
+		    var svlat;
+		    var svlon;
+        	const recognition = new webkitSpeechRecognition();
+        	var prev_infowindow;
+			
+	    
+	    </script>
+		<script type="text/javascript">
+			
+			function screenshot() {
+				alert("스크린샷이 저장되었습니다.")
+				
+			}
+			//phase 1
+			async function phOneLoc(location) {
+				document.getElementById("ynbox").style.display = "flex";
+				recflg = false;
+				document.getElementById("chs").style.display = "none";
+				const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay)) //이와 같이 선언 후
+		        await initTmap(location);
+				await wait(1000);
+		        var texts = "현재 계신 위치가 [" + location + "]인가요?";
+		   
+		   
+		        await wait(5000);
+	
+		        await textprint(texts);   
+		        speak("찾으시는 장소가 지성치과의원이 맞으신가요?", {
+			           rate: 1,
+			           pitch: 1.2,
+			           lang: "ko-KR"
+			       });
+		        await wait(8000);
+		        await textprint("네 아니오 버튼을 클릭해주세요.<br/>음성으로 말씀해주셔도 좋아요!");
+		     
+		  
+		        
+		    
+		        document.getElementById("phyn").style.visibility = "visible";
+		        
+		        var ynrst = await record();
+		        ynrst = ynrst + "";
+		        
+		        console.log("isitundefined ? : " + ynrst);
+		        if (ynrst == "undefined") {
+		        	
+		        	phOneNone();
+		        	return;
+		        }
+		        console.log("phone rst : " + typeof ynrst);
+		        var url = '/voice/api/v1/voiceYN?texts=' + ynrst;
+		        
+		        makeRequest(url)
+		        .then(data =>{
+		       		console.log(data)
+		       		console.log(typeof data)
+		       		if (data == "true" || data == true) {
+		       			//Yes ans case
+		       			console.log("nextpase");
+		       			document.getElementById("phyn").style.visibility = "hidden";
+		       			initTmap(location);
+		       			phTwo();
+	
+		       		}
+		       		else{
+		       			//NO ans case
+		       			console.log("return zero")
+		       			phOneNone();
+		       		}
+		        	
+		        })
+		        .catch(error => console.error(error));
+
+			}
+			
+			
+			
+
+			async function phOneNone() {
+				recflg = false;
+				recognition.stop();
+				
+				document.getElementById("phyn").style.visibility = "hidden";
+				document.getElementById("chs").style.display = "none";
+				document.getElementById("ynbox").style.display = "none";
+				const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay)) //이와 같이 선언 후
+				
+		        initTmap("용산역");
+				
+				await textprint("현재 계신 위치를 알고싶어요!");
+			     speak("현재 계신 위치를 알고싶어요!", {
+			           rate: 1,
+			           pitch: 1.2,
+			           lang: "ko-KR"
+			       });
+		        await wait(3000);
+		        await textprint("현재 계신 위치를 입력해 주시거나 말씀해주세요! ");
+		        
+		        speak("현재 계신 위치를 입력해 주시거나 말씀해주세요! ", {
+			           rate: 1,
+			           pitch: 1.2,
+			           lang: "ko-KR"
+			       });
+		        
+		        
+
+		        await wait(3000);
+		        document.getElementById("phyn").style.visibility = "visible";
+		  
+				
+				var locrst = await record();
+				console.log(locrst);
+				var url = '/voice/api/v1/voiceinsert?texts=' + locrst;
+				
+				makeRequest(url)
+		        .then(data =>{
+		       		console.log(data)
+		       		if (data == "" || data ==null) {
+		       			
+		       			console.log("unvalid data");
+		       			phOneNone();
+
+		       		}
+		       		else{
+		       			
+		       			console.log("gooddata")
+		       			console.log(data);
+		       			phOneLoc(data);
+		       	
+		       		}
+		        	
+		        	
+		        })
+		        .catch(error => console.error(error));
+	
+			}
+			
+			
+			async function phTwo() {
+				recflg = false;
+				recognition.stop();
+				document.getElementById("phyn").style.visibility = "hidden";
+				
+				const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay)) //이와 같이 선언 후
+				document.getElementById("chs").style.display = "flex";
+	
+			}
+			
+			async function phThree(srchworsrchword) {
+				recflg = false;
+				
+				document.getElementById("chs").style.display = "none";
+				const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay)) //이와 같이 선언 후
+				srchPlc(srchworsrchword);
+				var ipttexts = srchworsrchword.replace(';','');
+				var prttexts = "근처의 [" +ipttexts+ "]시설 위치입니다.<br>" +"원하시는 곳을 선택해 주세요.";
+				
+				await textprint(prttexts);
+		        await wait(1000);
+					
+			}
+			
+			async function srchPlc(srchworsrchword){
+				recflg = false;
+				recognition.stop();
+				const wait = (timeToDelay) => new Promise((resolve) => setTimeout(resolve, timeToDelay)) //이와 같이 선언 후
+
+
+	    		var iconrt;
+	    		if (srchworsrchword == "요양원;") {iconrt = "img/nursinghm.png";}
+	    		if (srchworsrchword == "병원;") {iconrt = "img/hosicon.png";}
+	    		if (srchworsrchword == "약국;") {iconrt = "img/pharmacyicon.png";}
+	    		if (srchworsrchword == "은행;") {iconrt = "img/bankicon.png";}
+
+				console.log(srchworsrchword);
+				var searchKeyword = srchworsrchword;
+				var headers = {}; 
+				headers["appKey"]="hAeh0XQZwO5CeTusAbw0h8wz6PZeKF3d9ZFlvO18";
+				
+				$.ajax({
+					method:"GET", // 요청 방식
+					headers : headers,
+					url:"https://apis.openapi.sk.com/tmap/pois/search/around?version=1&format=json&callback=result", // url 주소
+					data:{
+						"categories" : searchKeyword,
+						"resCoordType" : "EPSG3857",
+						"searchType" : "name",
+						"searchtypCd" : "A",
+						"radius" : 1,
+						"reqCoordType" : "WGS84GEO",
+						"centerLon" : svlon,
+						"centerLat" : svlat,
+						"count" : 10
+					},
+					success:function(response){
+						console.log(response);
+						
+						var resultpoisData = response.searchPoiInfo.pois.poi;
+						
+						// 2. 기존 마커, 팝업 제거
+						if(markerArr.length > 0){
+							for(var i in markerArr){
+								markerArr[i].setMap(null);
+							}
+							markerArr = [];
+						}
+	
+						if(labelArr.length > 0){
+							for(var i in labelArr){
+								labelArr[i].setMap(null);
+							}
+							labelArr = [];
+						}
+						
+						var innerHtml = ""; // Search Reulsts 결과값 노출 위한 변수
+						var positionBounds = new Tmapv2.LatLngBounds(); //맵에 결과물 확인 하기 위한 LatLngBounds객체 생성
+						// 이전에 열렸던 Infowindow를 저장할 변수
+						
+						// 3. POI 마커 표시
+						for(var k in resultpoisData){
+						    // POI 마커 정보 저장
+						    var noorLat = Number(resultpoisData[k].noorLat);
+						    var noorLon = Number(resultpoisData[k].noorLon);
+						    var name = resultpoisData[k].name;
+						    
+						    // 좌표 객체 생성
+						    var pointCng = new Tmapv2.Point(noorLon, noorLat);
+						    
+						    // EPSG3857좌표계를 WGS84GEO좌표계로 변환
+						    var projectionCng = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(pointCng);
+						    
+						    var lat = projectionCng._lat;
+						    var lon = projectionCng._lng;
+						    
+						    // 좌표 설정
+						    var markerPosition = new Tmapv2.LatLng(lat, lon);
+						    
+						    // Marker 설정
+						    marker = new Tmapv2.Marker({
+						        position : markerPosition,
+						        icon : iconrt,
+						        iconSize : new Tmapv2.Size(90, 153),
+						        title : name,
+						        map:map
+						    });
+						    // 클로저를 이용하여 각 마커의 클릭 이벤트에 핸들러 추가
+						    (function(marker, markerPosition, name, prev_infowindow) {
+						        marker.addListener("touchstart", async function() {
+						       
+						        	var chk = !!document.getElementById("dtpop");
+						        	console.log("chk : " + chk);
+						        	if (chk == true) {
+						        		document.getElementById("dtpop").style.visibility = "hidden";
+						        		
+						        	}
+						        	await textprint("약도를 저장하시려면 저장을 눌러주세요");
+						            console.log("Marker 위치: " + markerPosition.lat() + ", " + markerPosition.lng());
+						            console.log("현재 위치 : " + svlat , svlon);
+						            findway(svlat,svlon,markerPosition.lat(),markerPosition.lng());
+						            document.getElementById("trg").style.display = "flex";
+						            var text = "찾으시는 장소가 [" + name + "]가 맞으신가요?";
+						            console.log("click name : " + name);
+						            speak("찾으시는 장소가 지성치과의원이 맞으신가요?", {
+								           rate: 1,
+								           pitch: 1.2,
+								           lang: "ko-KR"
+								       });
+						            await textprint(text);
+						            await wait(10000);
+						    /*         textprint("약도를 저장하시려면 저장을 눌러주세요"); */
+						            await wait(10000);
+
+						            // Infowindow에 표시될 내용
+						            var content = '<div id="dtpop" style="visibility:visible;position:relative;z-index:999999;padding:5px;font-size:2rem;width:63vw;background-color: white;display: inline-flex;justify-content: center;border-radius: 30px;border: 12px solid #ED174F; margin-top: -50%; margin-left:-50%;">' + name + '</div>';
+
+
+						            // Infowindow 생성
+						            var infowindow = new Tmapv2.InfoWindow({
+						                position : markerPosition, // 지정된 마커의 위도, 경도
+						                content : content, // 인포윈도우에 표시될 내용
+						                type : 2, // 인포윈도우 타입 지정.
+						                map : map // 인포윈도우가 표시될 맵 객체
+						            });
+						            $("#dtpop").parent().css("border", "none");
+						            $("#dtpop").parent().css("background", "none");
+
+						            // 기존의 infowindow를 닫습니다.
+						            if(prev_infowindow) {
+						                prev_infowindow.close();
+						            }
+
+						            // 클릭된 infowindow를 전역으로 설정합니다.
+						            prev_infowindow = infowindow;
+						        });
+						    })(marker, markerPosition, name, prev_infowindow);
+						    
+						    // 마커들을 담을 배열에 마커 저장
+						    markerArr.push(marker);
+						    positionBounds.extend(markerPosition); // LatLngBounds의 객체 확장
+						}
+						
+					
+						map.panToBounds(positionBounds);	// 확장된 bounds의 중심으로 이동시키기
+						map.zoomOut();
+					},
+					error:function(request,status,error){
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+				
+				
+				
+			}
+		
+			function findway(startlat, startlon, endlat, endlon) {
+				console.log(startlat,startlon,endlat,endlon);
+				// 3. 경로탐색 API 사용요청
+				var headers = {}; 
+					headers["appKey"]="hAeh0XQZwO5CeTusAbw0h8wz6PZeKF3d9ZFlvO18";
+
+				$.ajax({
+						method : "POST",
+						headers : headers,
+						url : "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json&callback=result",
+						async : false,
+						data : {
+							"startX" : startlon,
+							"startY" : startlat,
+							"endX" : endlon,
+							"endY" : endlat,
+							"reqCoordType" : "WGS84GEO",
+							"resCoordType" : "EPSG3857",
+							"startName" : "출발지",
+							"endName" : "도착지"
+						},
+						success : function(response) {
+							var resultData = response.features;
+
+							//결과 출력
+							var tDistance = "총 거리 : "
+									+ ((resultData[0].properties.totalDistance) / 1000)
+											.toFixed(1) + "km,";
+							var tTime = " 총 시간 : "
+									+ ((resultData[0].properties.totalTime) / 60)
+											.toFixed(0) + "분";
+
+					
+							
+							//기존 그려진 라인 & 마커가 있다면 초기화
+							if (resultdrawArr.length > 0) {
+								for ( var i in resultdrawArr) {
+									resultdrawArr[i]
+											.setMap(null);
+								}
+								resultdrawArr = [];
+							}
+							
+							drawInfoArr = [];
+
+							for ( var i in resultData) { //for문 [S]
+								var geometry = resultData[i].geometry;
+								var properties = resultData[i].properties;
+								var polyline_;
+
+
+								if (geometry.type == "LineString") {
+									for ( var j in geometry.coordinates) {
+										// 경로들의 결과값(구간)들을 포인트 객체로 변환 
+										var latlng = new Tmapv2.Point(
+												geometry.coordinates[j][0],
+												geometry.coordinates[j][1]);
+										// 포인트 객체를 받아 좌표값으로 변환
+										var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+												latlng);
+										// 포인트객체의 정보로 좌표값 변환 객체로 저장
+										var convertChange = new Tmapv2.LatLng(
+												convertPoint._lat,
+												convertPoint._lng);
+										// 배열에 담기
+										drawInfoArr.push(convertChange);
+									}
+								} else {
+									var markerImg = "";
+									var pType = "";
+									var size;
+
+									if (properties.pointType == "S") { //출발지 마커
+										markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_s.png";
+										pType = "S";
+										size = new Tmapv2.Size(24, 38);
+									} else if (properties.pointType == "E") { //도착지 마커
+										markerImg = "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_r_m_e.png";
+										pType = "E";
+										size = new Tmapv2.Size(24, 38);
+									} else { //각 포인트 마커
+										markerImg = "http://topopen.tmap.co.kr/imgs/point.png";
+										pType = "P";
+										size = new Tmapv2.Size(8, 8);
+									}
+
+									// 경로들의 결과값들을 포인트 객체로 변환 
+									var latlon = new Tmapv2.Point(
+											geometry.coordinates[0],
+											geometry.coordinates[1]);
+
+									// 포인트 객체를 받아 좌표값으로 다시 변환
+									var convertPoint = new Tmapv2.Projection.convertEPSG3857ToWGS84GEO(
+											latlon);
+
+									var routeInfoObj = {
+										markerImage : markerImg,
+										lng : convertPoint._lng,
+										lat : convertPoint._lat,
+										pointType : pType
+									};
+
+									// Marker 추가
+									marker_p = new Tmapv2.Marker(
+											{
+												position : new Tmapv2.LatLng(
+														routeInfoObj.lat,
+														routeInfoObj.lng),
+												icon : routeInfoObj.markerImage,
+												iconSize : size,
+												map : map
+											});
+								}
+							}//for문 [E]
+							drawLine(drawInfoArr);
+						},
+						error : function(request, status, error) {
+							console.log("code:" + request.status + "\n"
+									+ "message:" + request.responseText + "\n"
+									+ "error:" + error);
+						}
+					});
+				
+				
+				
+				
+			}
+			
+			function addComma(num) {
+				var regexp = /\B(?=(\d{3})+(?!\d))/g;
+				return num.toString().replace(regexp, ',');
+			}
+			
+			function drawLine(arrPoint) {
+				var polyline_;
+
+				polyline_ = new Tmapv2.Polyline({
+					path : arrPoint,
+					strokeColor : "#DD0000",
+					strokeWeight : 19,
+					map : map
+				});
+				resultdrawArr.push(polyline_);
+			}
+			
+			//ajax
+			function makeRequest(url) {
+			    return fetch(url)
+			        .then(response => {
+			            if (!response.ok) {
+			                throw new Error(`HTTP error! status: ${response.status}`);
+			            }
+			            return response.text();  // This returns a promise
+			        })
+			        .catch(error => {
+			            console.error('There was an error with the fetch operation: ', error);
+			            throw error;  // Propagate the error
+			        });
+			}
+
+			//bot text print
+			function textprint(texts) {
+				
+				return new Promise((resolve, reject) => {
+					var flg = true;
+					
+					   const textbox = document.getElementsByClassName('botansboxtext')[0]; // 첫번째 요소 참조
+					    textbox.innerHTML = "";
+					    
+					   
+					    textbox.innerHTML += texts;
+					    console.log(texts);
+					    return resolve(flg);	
+				})
+			 
+			}
+		
+
+			
+			//lon, lat => location text
+			function reverseGeo(lon, lat) {
+			    console.log("reversegeo start ");
+			    var headers = {}; 
+			    headers["appKey"]="hAeh0XQZwO5CeTusAbw0h8wz6PZeKF3d9ZFlvO18";
+			    
+			    return new Promise((resolve, reject) => {
+			        $.ajax({
+			            method : "GET",
+			            headers : headers,
+			            url : "https://apis.openapi.sk.com/tmap/geo/reversegeocoding?version=1&format=json&callback=result",
+			            data : {
+			                "coordType" : "WGS84GEO",
+			                "addressType" : "A10",
+			                "lon" : lon,
+			                "lat" : lat
+			            },
+			            success : function(response) {
+							// 3. json에서 주소 파싱
+							var arrResult = response.addressInfo;
+
+							//법정동 마지막 문자 
+							var lastLegal = arrResult.legalDong
+									.charAt(arrResult.legalDong.length - 1);
+
+							// 새주소
+							newRoadAddr = arrResult.city_do + ' '
+									+ arrResult.gu_gun + ' ';
+
+							if (arrResult.eup_myun == ''
+									&& (lastLegal == "읍" || lastLegal == "면")) {//읍면
+								newRoadAddr += arrResult.legalDong;
+							} else {
+								newRoadAddr += arrResult.eup_myun;
+							}
+							newRoadAddr += ' ' + arrResult.roadName + ' '
+									+ arrResult.buildingIndex;
+
+							// 새주소 법정동& 건물명 체크
+							if (arrResult.legalDong != ''
+									&& (lastLegal != "읍" && lastLegal != "면")) {//법정동과 읍면이 같은 경우
+
+								if (arrResult.buildingName != '') {//빌딩명 존재하는 경우
+									newRoadAddr += (' (' + arrResult.legalDong
+											+ ', ' + arrResult.buildingName + ') ');
+								} else {
+									newRoadAddr += (' (' + arrResult.legalDong + ')');
+								}
+							} else if (arrResult.buildingName != '') {//빌딩명만 존재하는 경우
+								newRoadAddr += (' (' + arrResult.buildingName + ') ');
+							}
+
+							// 구주소
+							jibunAddr = arrResult.city_do + ' '
+									+ arrResult.gu_gun + ' '
+									+ arrResult.legalDong + ' ' + arrResult.ri
+									+ ' ' + arrResult.bunji;
+							//구주소 빌딩명 존재
+							if (arrResult.buildingName != '') {//빌딩명만 존재하는 경우
+								jibunAddr += (' ' + arrResult.buildingName);
+							}
+
+							result = "새주소 : " + newRoadAddr + "</br>";
+							result += "지번주소 : " + jibunAddr + "</br>";
+							result += "위경도좌표 : " + lat + ", " + lon;
+			
+							console.log("reversegeo end ");
+							console.log("thisis reversegeo  : " + newRoadAddr);
+							console.log(typeof newRoadAddr);
+							var rst = newRoadAddr;
+					
+							   resolve(newRoadAddr);
+			            },
+			            error : function(request, status, error) {
+			                console.log("code:" + request.status + "\n"
+			                    + "message:" + request.responseText + "\n"
+			                    + "error:" + error);
+			                reject(error)
+			            }
+			        });
+			    });
+			}
+			
+			map = new Tmapv2.Map("map_div", {
+				center : new Tmapv2.LatLng(37.56520450, 126.98702028),
+				width : "100vw",
+				height : "100vh",
+				zoom : 19,
+				zoomControl : true,
+				scrollwheel : true
+	
+			});
+			
+			//map 
+			function initTmap(texts) {
+			
+				console.log("initTmap : " + texts)
+		
+				// 1. 지도 띄우기
+				
+				// 마커 초기화
+				marker1 = new Tmapv2.Marker(
+					{
+						icon : "img/mapmarker.png",
+						iconSize : new Tmapv2.Size(24, 38),
+						map : map
+					});
+		
+			
+					// 2. API 사용요청
+					var fullAddr = texts;
+					var headers = {}; 
+					headers["appKey"]="hAeh0XQZwO5CeTusAbw0h8wz6PZeKF3d9ZFlvO18";
+					$.ajax({
+						method : "GET",
+						headers : headers,
+						url : "https://apis.openapi.sk.com/tmap/geo/fullAddrGeo?version=1&format=json&callback=result",
+						async : false,
+						data : {
+							"coordType" : "WGS84GEO",
+							"fullAddr" : fullAddr
+						},
+						success : function(response) {
+
+							var resultInfo = response.coordinateInfo; 
+							console.log(resultInfo);
+							
+							// 기존 마커 삭제
+							marker1.setMap(null);
+							
+							// 3.마커 찍기
+							// 검색 결과 정보가 없을 때 처리
+							if (resultInfo.coordinate.length == 0) {
+								console.log("정보 x");
+							} else {
+								var lon, lat;
+								var resultCoordinate = resultInfo.coordinate[0];
+								if (resultCoordinate.lon.length > 0) {
+									// 구주소
+									lon = resultCoordinate.lon;
+									lat = resultCoordinate.lat;
+								} else { 
+									// 신주소
+									lon = resultCoordinate.newLon;
+									lat = resultCoordinate.newLat
+								}
+								console.log("lon : " + lon);
+								console.log("lat : " + lat);
+								svlon = lon;
+								svlat = lat;
+							
+								var lonEntr, latEntr;
+								
+								if (resultCoordinate.lonEntr == undefined && resultCoordinate.newLonEntr == undefined) {
+									lonEntr = 0;
+									latEntr = 0;
+								} else {
+									if (resultCoordinate.lonEntr.length > 0) {
+										lonEntr = resultCoordinate.lonEntr;
+										latEntr = resultCoordinate.latEntr;
+									} else {
+										lonEntr = resultCoordinate.newLonEntr;
+										latEntr = resultCoordinate.newLatEntr;
+									}
+								}
+									
+								var markerPosition = new Tmapv2.LatLng(Number(lat),Number(lon));
+								
+								// 마커 올리기
+								// 마커 올리기
+								marker1 = new Tmapv2.Marker(
+									{
+										position : markerPosition,
+										icon : "img/mapmarker.png",
+										iconSize : new Tmapv2.Size(
+										156, 156),
+										map : map
+									});
+								map.setCenter(markerPosition);
+								
+						
+								
+						
+							}
+						},
+						error : function(request, status, error) {
+							console.log(request);
+							console.log("code:"+request.status + "\n message:" + request.responseText +"\n error:" + error);
+							// 에러가 발생하면 맵을 초기화함
+							// markerStartLayer.clearMarkers();
+							// 마커초기화
+							map.setCenter(new Tmapv2.LatLng(37.570028, 126.986072));
+					
+						
+						}
+					});
+				
+		
+			}
+			
+		</script>
+		      <script type="text/javascript">
+		      
+		      function trig() {
+		    	  console.log("trig");
+				
+			}
+
+		      
+        	window.onload = function() {
+        		$("#botbox").trigger("click");
+        		var sessadd = "";
+         	 	var lon;
+        		var lat;
+        		var loc;
+        		var location;
+        		navigator.geolocation.getCurrentPosition(
+        			    async (position) => {
+        			    	
+        			        lon = position.coords.longitude;
+        			        
+        			        lat = position.coords.latitude;
+        			        svlat = lat;
+        			        svlon = lon;
+        			        console.log("lat : " + lat + "lon : " + lon);
+        			        location = await reverseGeo(lon, lat);
+        			        //origin
+        					phOneLoc(location); 
+        			    },
+        			    (error) => {
+        			        console.log("errrrrrr");
+        			        initTmap("서울특별시 중구 세종대로 110");
+        			        //에러시 phOneNone
+        			        phOneNone();
+        			        
+        			    }
+        			);
+        
+        	}
+//http://192.168.0.44/voice/voicepage.do
+	
+        	
+        	function record() {
+        	    return new Promise((resolve, reject) => {
+        	        recognition.continuous = true;
+        	        recflg = true;
+        	        var recordrst;
+        	  
+        	        recognition.onstart = () => console.log('음성 인식이 시작되었습니다.');
+        	        recognition.onresult = (event) => {
+        	            let transcript = event.results[event.results.length - 1][0].transcript;
+        	            console.log('음성 인식 결과:', transcript);
+        	            recordrst = transcript;
+        	            recognition.stop(); // Stop voice recognition
+        	            
+        	            
+        	        };
+        	        
+        	        recognition.onerror = (event) => {
+        	            console.error('음성 인식 에러:', event.error);
+        	            if (recflg == true) {
+        	            	recflg = false;
+        	            	resolve(recordrst); // Resolve promise with the transcript
+        	            	
+        	            }
+        	            reject(event.error); // Reject promise with the error
+        	            
+        	        };
+        	        
+        	        recognition.onend = () => {
+        	            console.log('음성 인식이 종료되었습니다.');
+        	            document.getElementById("phyn").style.visibility = "hidden";
+        	            if (recflg == true) {
+        	            	recflg = false;
+        	            	resolve(recordrst); // Resolve promise with the transcript
+        	            	
+        	            }
+        	            else{
+        	            	
+        	            	return
+        	            }
+        	            
+        	        };
+        	        
+        	        recognition.start();
+        	    });
+        	}
+        	var recflg = false;
+
+        	
+        	function speak(text, opt_prop) {
+        		
+        		 return new Promise((resolve) => {
+        				
+     				console.log("speack start");
+
+     			    window.speechSynthesis.cancel() // 현재 읽고있다면 초기화
+
+     			    const prop = opt_prop || {}
+
+     			    const speechMsg = new SpeechSynthesisUtterance()
+     			    speechMsg.rate = prop.rate || 1 // 속도: 0.1 ~ 10      
+     			    speechMsg.pitch = prop.pitch || 1 // 음높이: 0 ~ 2
+     			    speechMsg.lang = prop.lang || "ko-KR"
+     			    speechMsg.text = text;
+     			    // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
+     			    window.speechSynthesis.speak(speechMsg);
+     			    return resolve(true);
+
+        		 })
+        	
+			}
+        </script>
+		
+
+</div>
+
+    
+
+
+
+
+</body>
+</html>
