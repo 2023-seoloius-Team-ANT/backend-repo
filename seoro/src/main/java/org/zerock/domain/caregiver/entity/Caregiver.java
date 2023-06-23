@@ -3,6 +3,7 @@ package org.zerock.domain.caregiver.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,6 +128,7 @@ public class Caregiver {
   
   	public AdminResponseDTO puttingDTO(Caregiver caregiver) {
 		
+  		LocalDateTime localReg = caregiver.getRegdate();
 		LocalDate now = LocalDate.now(); //날짜 정보를 가져옴
 		int year = now.getYear(); // 현재 연도 얻기
 		
@@ -142,6 +144,15 @@ public class Caregiver {
 				.age(String.valueOf(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1))
 				.profile(caregiver.getProfile())
 				.certifi(caregiver.getCertifi())
+				.address(caregiver.getAddress())
+				.goal(caregiver.getGoal())
+				.good(caregiver.getGood())
+				.regdate(localReg.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")))
+				.tel(caregiver.getTel())
+				.info(caregiver.getInfo())
+				.exp(caregiver.getExp())
+				.service(caregiver.getService())
+				.certiImage(caregiver.getCertilmage())
 				.build();
 	}
   	

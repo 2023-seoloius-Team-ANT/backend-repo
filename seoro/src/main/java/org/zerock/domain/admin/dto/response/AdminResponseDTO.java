@@ -23,4 +23,16 @@ public class AdminResponseDTO {
 	private String profile;
 	private String certifi;
 	
+	//추가
+	private String address;
+	private String goal;
+	private String good;
+	private String regdate;
+	private String tel;
+	private String info;
+	private String exp;
+	private String service;
+	private String certiImage;
+	
+	
 }
