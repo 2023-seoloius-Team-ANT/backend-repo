@@ -3,6 +3,7 @@ package org.zerock.domain.caregiver.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
 import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.caregiver.dto.response.CaregiverResponseDTO;
+import org.zerock.domain.complain.entity.Complain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +43,9 @@ public class Caregiver {
 	
 	@OneToMany(mappedBy = "caregiver")
 	List<BetSeniorCare> betCaregivers = new ArrayList<BetSeniorCare>();
+	
+	@OneToMany(mappedBy = "caregiver")
+	List<Complain> complain = new ArrayList<Complain>();
 	
 	@Column(nullable = false)
 	private String name;
@@ -123,6 +128,7 @@ public class Caregiver {
   
   	public AdminResponseDTO puttingDTO(Caregiver caregiver) {
 		
+  		LocalDateTime localReg = caregiver.getRegdate();
 		LocalDate now = LocalDate.now(); //날짜 정보를 가져옴
 		int year = now.getYear(); // 현재 연도 얻기
 		
@@ -138,6 +144,15 @@ public class Caregiver {
 				.age(String.valueOf(year - (Integer.parseInt((caregiver.getBirth()).substring(0, 4))) + 1))
 				.profile(caregiver.getProfile())
 				.certifi(caregiver.getCertifi())
+				.address(caregiver.getAddress())
+				.goal(caregiver.getGoal())
+				.good(caregiver.getGood())
+				.regdate(localReg.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분")))
+				.tel(caregiver.getTel())
+				.info(caregiver.getInfo())
+				.exp(caregiver.getExp())
+				.service(caregiver.getService())
+				.certiImage(caregiver.getCertilmage())
 				.build();
 	}
   	

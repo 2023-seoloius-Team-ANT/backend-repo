@@ -18,6 +18,7 @@ public enum ResponseStatus {
 	GET_CAREGIVER_SUCCESS("ADM000", "승인 전 요양사 리스트 가져오기 성공"),
 	ACCEPT_CAREGIVER_SUCCESS("ADM001", "요양사 회원 요청 승인 성공"),
 	DECLINE_CAREGIVER_SUCCESS("ADM002", "요양사 회원 요청 거절 성공"),
+	GET_WORKSETCOUNT_SUCCESS("ADM007", "관리자 잔여 업무 갯수 가져오기 성공"),
 	
 	//검색내용 저장 성공 status
 	SEARCH_SAVE_SUCCESS("SH000", "검색내용 저장 성공"),
@@ -34,7 +35,24 @@ public enum ResponseStatus {
 	CONNECT_RESEVLIST_SUCCESS("CO001", "요양사 -> 예약 현황 불러오기 성공"),
 	CONNECT_CONFIRMLIST_SUCCESS("CO002", "요양사 -> 예약 확정된 노인 리스트 불러오기 성공"),
 	CONNECT_ACCEPT_SUCCESS("CO003", "요양사 -> 예약 수락 성공"),
-	CONNECT_DECLINE_SUCCESS("CO004", "요양사 -> 예약 거절 성공");
+	CONNECT_DECLINE_SUCCESS("CO004", "요양사 -> 예약 거절 성공"),
+	
+	//신고 관련 응답 status
+	COMPLAIN_POST_SUCCESS("COM000", "컴플레인 생성 성공"),
+	COMPLAIN_GETALL_SUCCESS("COM001", "모든 컴플레인 리스트 가져오기 성공"),
+	COMPLAIN_COMPLETE_SUCCESS("COM002", "컴플레인 확인 완료"),
+	
+	// 통계 관련 응답 status
+	STATISTIC_CAREGIVER_SUCCESS("STA000", "요양사 통계 가져오기 성공"),
+	STATISTIC_SENIOR_SUCCESS("ADM003", "년도 월별 신규 노인 회원 가져오가 성공"),
+	
+	// 관리자 관련 응답 status
+	ADMIN_STATISTICS_NEWSENIOR_SUCCESS("ADM003" , "년도 월별 신규 노인 회원 가져오기 성공"),
+	ADMIN_STATISTICS_NEWCAREGIVER_SUCCESS("ADM004", "년도 월별 신규 요양사 회원 가져오기 성공"),
+	ADMIN_STATISTICS_MATCHING_YN_SUCCESS("ADM005", "년도 월 별 매칭 통계 가져오기 성공"),
+	ADMIN_STATISTICS_WORK_SUCCESS("ADM006", "관리자 잔여 업무 갯수 가져오기 성공"),
+	ADMIN_STATISTICS_MATCHING_CNT_SUCCESS("ADM007", "당월 매칭 통계(총 갯수) 가져오기 성공");
+	
 	
 	
 	private final String code;

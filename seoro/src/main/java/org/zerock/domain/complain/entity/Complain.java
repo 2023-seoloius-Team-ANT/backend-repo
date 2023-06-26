@@ -1,8 +1,7 @@
-package org.zerock.domain.betSeniorCare.entity;
+package org.zerock.domain.complain.entity;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,12 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.zerock.domain.betSeniorCare.entity.BetSeniorCare;
 import org.zerock.domain.caregiver.entity.Caregiver;
-import org.zerock.domain.senior.entity.Senior;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,40 +24,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Setter
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "BETSENIORCARE")
-public class BetSeniorCare {
-	
+public class Complain {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long conno;
-	
-	@ManyToOne(cascade= CascadeType.ALL)
-	@JoinColumn(name = "seniorno")
-	private Senior senior;
+	private long complainno;
 	
 	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "careno")
 	private Caregiver caregiver;
 	
 	@Column(nullable = false)
-	private int month;
+	private String content;
 	
 	@Column(nullable = false)
-	private int year;
+	private int stateck; // 0은 대기상태, 1은 확인 상태를 의미합니다.
 	
 	@CreationTimestamp
 	private LocalDateTime regdate;
 	
-	@Column(nullable = false) 
-	private int stateck; // 0은 기본 상태, 1은 승인 상태, 2는 거절 상태를 의미합니다.
-	
-	@Column
-	private String reason; // 사유
 	
 }

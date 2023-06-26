@@ -82,7 +82,6 @@ public class CaregiverController {
 		List<CaregiverResponseDTO> caregiverResponseDTO =  caregiverService.getCaregiverList(year, month, lon ,lat);
 		ResponseFormat<List<CaregiverResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.CAREGIVER_FILTERLIST_SUCCESS, caregiverResponseDTO);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
-		}
-
+	}
 	
 }

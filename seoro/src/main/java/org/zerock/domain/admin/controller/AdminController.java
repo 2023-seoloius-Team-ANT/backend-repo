@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.admin.dto.request.AdminRequestDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
 import org.zerock.domain.admin.dto.response.AdminResponseDTO;
+import org.zerock.domain.admin.dto.response.CaregiverStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.ComplainCaregiverCntDTO;
+import org.zerock.domain.admin.dto.response.MatchingStaticMonthResponseDTO;
+import org.zerock.domain.admin.dto.response.SeniorStaticResponseDTO;
+import org.zerock.domain.admin.dto.response.WorkStaticResponseDTO;
 import org.zerock.domain.admin.service.AdminService;
 import org.zerock.global.ResponseFormat;
 import org.zerock.global.ResponseStatus;
@@ -35,6 +40,16 @@ public class AdminController {
 		
 		List<AdminResponseDTO> dtoList = adminService.getCaregiver();
 		ResponseFormat<List<AdminResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.GET_CAREGIVER_SUCCESS, dtoList);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
+	}
+	
+	@GetMapping("/admin/work")
+	public ResponseEntity<ResponseFormat<ComplainCaregiverCntDTO>> findCompCareCnt() throws Exception {
+		//GET_WORKSETCOUNT_SUCCESS
+		System.out.println("test");
+		ComplainCaregiverCntDTO dto = adminService.findCompCareCnt();
+		ResponseFormat<ComplainCaregiverCntDTO> responseFormat = new ResponseFormat<>(ResponseStatus.GET_WORKSETCOUNT_SUCCESS, dto);
+		System.out.println(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
@@ -59,5 +74,34 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
 	}
 	
+	@GetMapping("/admin/caregiver/{year}") // 년도 월별 신규 요양사 회원 가져오는 API  
+	public ResponseEntity<ResponseFormat<CaregiverStaticResponseDTO>> getStaticCaregiver(@PathVariable int year) throws Exception{
+		CaregiverStaticResponseDTO caregiverResponse = adminService.getStaticCaregiver(year);
+		ResponseFormat<CaregiverStaticResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.ADMIN_STATISTICS_NEWCAREGIVER_SUCCESS, caregiverResponse);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
+	}
 	
+	@GetMapping("/admin/seinor/{year}")
+	public ResponseEntity<ResponseFormat<SeniorStaticResponseDTO>> getStaticSenior(@PathVariable int year) throws Exception{
+		System.out.println("thiiscall");
+		SeniorStaticResponseDTO seniorResponse = adminService.getStaticSenior(year);
+		ResponseFormat<SeniorStaticResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.STATISTIC_SENIOR_SUCCESS, seniorResponse);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseFormat);
+	}
+  
+	@GetMapping("/admin/connect/{year}")
+	public ResponseEntity<ResponseFormat<List<WorkStaticResponseDTO>>> getadminWork(@PathVariable int year) throws Exception{
+		List<WorkStaticResponseDTO> workResponse = adminService.getadminWork(year);
+		ResponseFormat<List<WorkStaticResponseDTO>> responseFormat = new ResponseFormat<>(ResponseStatus.ADMIN_STATISTICS_WORK_SUCCESS, workResponse);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+	@GetMapping("/admin/connect")
+	public ResponseEntity<ResponseFormat<MatchingStaticMonthResponseDTO>> getMatchingStatic() throws Exception{
+		MatchingStaticMonthResponseDTO matchingResponse = adminService.getMatchingStatic();
+		ResponseFormat<MatchingStaticMonthResponseDTO> responseFormat = new ResponseFormat<>(ResponseStatus.ADMIN_STATISTICS_MATCHING_CNT_SUCCESS, matchingResponse);
+		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
+	}
+	
+
 }

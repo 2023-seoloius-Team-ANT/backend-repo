@@ -1,7 +1,6 @@
 //package org.zerock.test;
 //
 //import java.math.BigDecimal;
-//import java.sql.Timestamp;
 //import java.time.LocalDateTime;
 //
 //import javax.transaction.Transactional;
@@ -11,22 +10,23 @@
 //import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.test.annotation.Commit;
+//import org.zerock.domain.admin.repository.AdminRepo;
 //import org.zerock.domain.admin.service.AdminService;
 //import org.zerock.domain.betSeniorCare.repository.BetRepo;
 //import org.zerock.domain.caregiver.entity.Caregiver;
 //import org.zerock.domain.caregiver.repository.CaregiverRepo;
 //import org.zerock.domain.searched.repository.SearchRepo;
-//import org.zerock.domain.senior.dto.request.SeniorRequestDTO;
-//import org.zerock.domain.senior.entity.Senior;
 //import org.zerock.domain.senior.repository.SeniorRepo;
 //
 //import lombok.extern.java.Log;
+//import lombok.extern.slf4j.Slf4j;
 //
 //@Transactional
 //@AutoConfigureMockMvc
 //@SpringBootTest
 //@Log
 //@Commit
+//@Slf4j
 //public class Tests123 {
 //	
 //	@Autowired
@@ -43,6 +43,10 @@
 //	
 //	@Autowired
 //	AdminService adminService;
+//	
+//	@Autowired
+//	AdminRepo adminRepo;
+	
 	
 
 	
@@ -96,17 +100,17 @@
 //	
 //		
 //		Caregiver caregiver = new Caregiver();
-//		caregiver.setName("김옥순");
+//		caregiver.setName("장영식");
 //		caregiver.setBirth("19991029");
-//		caregiver.setGender(1);
+//		caregiver.setGender(0);
 //		caregiver.setTel("01012341234");
-//		caregiver.setAddress("제주시");
+//		caregiver.setAddress("강릉시");
 //		caregiver.setLati(val1);
 //		caregiver.setLon(val1);
 //		caregiver.setRegdate(dateTime);
-//		caregiver.setCid("kws");
+//		caregiver.setCid("jys");
 //		caregiver.setPwd("1233");
-//		caregiver.setRegCheck(0);
+//		caregiver.setRegCheck(1);
 //		caregiver.setCertilmage("me");
 //		
 //		caregiverRepo.save(caregiver);
@@ -134,7 +138,7 @@
 //		String val2 = "12.45";
 //		String val3 = "1";
 //		
-//		dto.setSid("ksy");
+//		dto.setId("ksy");
 //		dto.setPwd("12345");
 //		dto.setName("강순옥");
 //		dto.setSpec1("등이 아파요");
@@ -213,6 +217,35 @@
 //		System.out.println(senior);
 //			
 //	}
-//	
+	
+//	@Test
+//	public void adminT() throws Exception { //관리자 DB등록
+//		
+//		Sadmin sadmin = new Sadmin();
+//		sadmin.setAdminno(1111L);
+//		sadmin.setAid("tempKJM");
+//		sadmin.setPwd("1234");
+//		sadmin.setRoles("ADMIN");
+//		
+//		
+//		
+//		
+//		adminRepo.save(sadmin);
+//		
+//		AdminRequestDTO dto = new AdminRequestDTO();
+//		dto.setId("tempKJM");
+//		dto.setPwd("1234");
+//		
+//		sadmin = adminRepo.findByAdmin(dto.getId(), dto.getPwd());
+//		AdminResponseBothDTO responseBoth = sadmin.toAdminResponse(sadmin);
+//		
+//		log.info(responseBoth.getRoles());
+//		
+//		int sadmin = adminRepo.findByAid(dto.getId(), dto.getPwd());
+//		log.info(Integer.toString(sadmin));
+//		
+//			
+//	}
+	
 //	}
 

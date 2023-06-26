@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.betSeniorCare.dto.request.BetSeniorCareRequestDTO;
 import org.zerock.domain.betSeniorCare.dto.response.BetSeniorCareResponseCfDTO;
@@ -64,7 +65,6 @@ public class BetSeniorCareController {
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}
 	
-	
 	// 신청 수락하는 API
 	@PutMapping("/{conno}/accept")
 	public ResponseEntity<ResponseFormat<Long>> acceptConnect(@PathVariable long conno) throws Exception{
@@ -75,8 +75,8 @@ public class BetSeniorCareController {
 	
 	// 신청 거절하는 API
 	@PutMapping("/{conno}/decline")
-	public ResponseEntity<ResponseFormat<Long>> declineConnect(@PathVariable long conno) throws Exception{
-		connectService.declineConnect(conno);
+	public ResponseEntity<ResponseFormat<Long>> declineConnect(@PathVariable long conno, @RequestParam(required = false) String reason) throws Exception{
+		connectService.declineConnect(conno, reason);
 		ResponseFormat<Long> responseFormat = new ResponseFormat<>(ResponseStatus.CONNECT_DECLINE_SUCCESS);
 		return ResponseEntity.status(HttpStatus.OK).body(responseFormat);
 	}

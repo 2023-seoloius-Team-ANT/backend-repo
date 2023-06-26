@@ -7,14 +7,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.zerock.domain.admin.dto.response.AdminResponseBothDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "ADMIN")
-
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Sadmin {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +35,12 @@ public class Sadmin {
 	
 	@Column(nullable = false)
 	private String roles;
+	
+	public AdminResponseBothDTO toAdminResponse(Sadmin sad) {
+		return AdminResponseBothDTO.builder()
+				.numberPk(String.valueOf(sad.getAdminno()))
+				.roles(sad.getRoles())
+				.build();
+	} 
 	
 }

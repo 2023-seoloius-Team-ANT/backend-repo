@@ -14,7 +14,7 @@ public interface BetSeniorCareService {
 	
 	public void acceptConnect(long conno) throws Exception;
 	
-	public void declineConnect(long conno) throws Exception;
+	public void declineConnect(long conno, String reason) throws Exception;
 
 	public List<BetSeniorCareResponseRsDTO> getreserveList(long careno) throws Exception;
 
